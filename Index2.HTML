@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gregory is on Vacation</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at center, #35104f, #160021 55%, #08000d);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Glowing background */
+.glow {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ff4fd8;
+    box-shadow: 0 0 15px #ff4fd8, 0 0 35px #a600ff;
+    animation: float 8s infinite ease-in-out;
+    opacity: .8;
+}
+
+.glow:nth-child(1) { left: 10%; top: 80%; animation-delay: 0s; }
+.glow:nth-child(2) { left: 25%; top: 20%; animation-delay: 2s; }
+.glow:nth-child(3) { left: 45%; top: 75%; animation-delay: 1s; }
+.glow:nth-child(4) { left: 70%; top: 15%; animation-delay: 3s; }
+.glow:nth-child(5) { left: 85%; top: 65%; animation-delay: 1.5s; }
+.glow:nth-child(6) { left: 60%; top: 90%; animation-delay: 4s; }
+.glow:nth-child(7) { left: 5%; top: 35%; animation-delay: 2.5s; }
+.glow:nth-child(8) { left: 92%; top: 30%; animation-delay: 3.5s; }
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-80px) scale(1.5);
+    }
+}
+
+/* Main card */
+.card {
+    position: relative;
+    z-index: 2;
+    width: min(90%, 650px);
+    padding: 55px 35px;
+    text-align: center;
+    border-radius: 28px;
+
+    background: rgba(30, 0, 45, .65);
+    border: 1px solid rgba(255, 90, 220, .4);
+
+    box-shadow:
+        0 0 30px rgba(255, 0, 200, .25),
+        0 0 80px rgba(130, 0, 255, .2);
+
+    backdrop-filter: blur(15px);
+}
+
+.icon {
+    font-size: 55px;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 0 15px #ff42dc);
+}
+
+h1 {
+    margin: 0;
+    font-size: clamp(32px, 6vw, 55px);
+    background: linear-gradient(90deg, #ff72e2, #b45cff, #ff72e2);
+    background-size: 200%;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: gradient 4s infinite linear;
+}
+
+@keyframes gradient {
+    to {
+        background-position: 200%;
+    }
+}
+
+p {
+    font-size: 18px;
+    color: #e7cce9;
+    line-height: 1.6;
+}
+
+.status {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 18px;
+    border-radius: 50px;
+    background: rgba(255, 60, 200, .12);
+    border: 1px solid rgba(255, 100, 220, .4);
+    color: #ff8ee8;
+    box-shadow: 0 0 20px rgba(255, 50, 200, .15);
+    font-size: 14px;
+}
+
+.footer {
+    margin-top: 30px;
+    font-size: 12px;
+    color: #987aa0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Floating lights -->
+<div class="glow"></div>
+<div class="glow"></div>
+<div class="glow"></div>
+<div class="glow"></div>
+<div class="glow"></div>
+<div class="glow"></div>
+<div class="glow"></div>
+<div class="glow"></div>
+
+<div class="card">
+    <div class="icon">🌴</div>
+
+    <h1>Sorry, Gregory is on vacation!</h1>
+
+    <p>
+        The website is currently closed by the owner.
+        <br>
+        Come back later and see what’s waiting for you.
+    </p>
+
+    <div class="status">
+        ● WEBSITE TEMPORARILY CLOSED
+    </div>
+
+    <div class="footer">
+        Please check back soon
+    </div>
+</div>
+
+</body>
+</html>
