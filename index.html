@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>⚡ EKITTEN™ - YOU HAVE BEEN SELECTED ⚡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Rubik:wght@400;600;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#1a0733;
+    --bg2:#3d0a5c;
+    --pink:#ff2fb0;
+    --pink-hot:#ff6ec7;
+    --purple:#9b30ff;
+    --purple2:#6a1fd0;
+    --yellow:#fff23d;
+    --cyan:#3df6ff;
+    --text:#fff5ff;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    color:var(--text);
+    font-family:'Rubik', sans-serif;
+    overflow-x:hidden;
+    background:
+      radial-gradient(circle at 15% 10%, #ff2fb055, transparent 40%),
+      radial-gradient(circle at 85% 20%, #9b30ff66, transparent 45%),
+      radial-gradient(circle at 50% 90%, #3df6ff33, transparent 40%),
+      linear-gradient(160deg, var(--bg1), var(--bg2) 60%, #1a0733);
+    background-attachment:fixed;
+  }
+  ::selection{ background:var(--pink); color:#fff; }
+
+  /* animated sparkle bg */
+  .sparkles{ position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+  .sparkles span{
+    position:absolute; width:4px; height:4px; background:var(--yellow); border-radius:50%;
+    box-shadow:0 0 8px 2px var(--yellow); animation: twinkle 2.4s infinite ease-in-out;
+  }
+  @keyframes twinkle{ 0%,100%{opacity:0.15; transform:scale(0.6);} 50%{opacity:1; transform:scale(1.3);} }
+
+  section, header, footer, nav{ position:relative; z-index:2; }
+
+  /* ---------- MARQUEE TICKER ---------- */
+  .ticker{
+    background:repeating-linear-gradient(45deg, var(--pink), var(--pink) 12px, var(--purple2) 12px, var(--purple2) 24px);
+    color:#fff; font-family:'JetBrains Mono', monospace; font-weight:700; font-size:0.82rem;
+    padding:0.5rem 0; overflow:hidden; white-space:nowrap; border-bottom:3px solid var(--yellow);
+    letter-spacing:0.03em;
+  }
+  .ticker-track{ display:inline-block; padding-left:100%; animation: scroll-left 18s linear infinite; }
+  @keyframes scroll-left{ from{ transform:translateX(0); } to{ transform:translateX(-100%); } }
+
+  /* ---------- NAV ---------- */
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1rem 1.5rem;
+    background:rgba(26,7,51,0.75);
+    backdrop-filter:blur(8px);
+    border-bottom:2px solid var(--pink);
+    position:sticky; top:0; z-index:30;
+  }
+  .brand{ display:flex; align-items:center; gap:0.6rem; }
+  .brand-name{
+    font-family:'Baloo 2', cursive; font-weight:800; letter-spacing:0.01em; font-size:1.3rem;
+    background:linear-gradient(90deg, var(--pink-hot), var(--cyan), var(--yellow));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    text-shadow:0 0 18px rgba(255,110,199,0.5);
+  }
+  .badge-verified{
+    display:inline-flex; align-items:center; gap:0.3rem; font-family:'JetBrains Mono', monospace;
+    font-size:0.62rem; font-weight:700; background:var(--cyan); color:#1a0733; padding:0.2rem 0.5rem;
+    border-radius:20px; animation: spin-badge 3s linear infinite;
+  }
+  @keyframes spin-badge{ 0%,90%,100%{ transform:rotate(0deg);} 95%{ transform:rotate(8deg);} }
+  nav .links{ display:flex; gap:1.4rem; font-weight:700; font-size:0.82rem; }
+  nav .links a{ color:#fff; text-decoration:none; }
+  nav .links a:hover{ color:var(--yellow); }
+  @media (max-width:640px){ nav .links{ display:none; } }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:94vh; display:flex; align-items:center; padding:6rem 1.5rem 3rem;
+    background:
+      linear-gradient(180deg, rgba(26,7,51,0.35) 0%, rgba(26,7,51,0.85) 70%, var(--bg1) 100%),
+      url('ekitten_assets/image9.jpg') center 30%/cover no-repeat;
+  }
+  .hero-inner{ max-width:900px; margin:0 auto; text-align:center; width:100%; }
+  .urgency-pill{
+    display:inline-block; background:var(--yellow); color:#3d0a5c; font-family:'JetBrains Mono', monospace;
+    font-weight:700; font-size:0.78rem; padding:0.4rem 1rem; border-radius:30px; margin-bottom:1.2rem;
+    animation: pulse-pill 1.1s infinite;
+    box-shadow:0 0 20px rgba(255,242,61,0.7);
+  }
+  @keyframes pulse-pill{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.06);} }
+  .hero h1{
+    font-family:'Baloo 2', cursive; font-weight:800;
+    font-size:clamp(2.2rem, 7vw, 4.2rem); line-height:1.05; margin:0 0 1rem;
+    background:linear-gradient(90deg, var(--pink-hot), var(--purple), var(--cyan));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter: drop-shadow(0 0 24px rgba(255,47,176,0.55));
+  }
+  .hero p.sub{ max-width:560px; margin:0 auto 2.2rem; color:#f3e6ff; font-size:1.1rem; line-height:1.6; font-weight:600; }
+  .countdown{
+    display:flex; gap:0.7rem; justify-content:center; margin-bottom:2rem; flex-wrap:wrap;
+  }
+  .cbox{
+    background:rgba(0,0,0,0.35); border:2px solid var(--pink); border-radius:10px;
+    padding:0.7rem 1rem; min-width:70px; text-align:center;
+    box-shadow:0 0 16px rgba(255,47,176,0.45);
+  }
+  .cbox .num{ font-family:'JetBrains Mono', monospace; font-size:1.5rem; font-weight:700; color:var(--yellow); }
+  .cbox .lbl{ font-size:0.6rem; letter-spacing:0.08em; text-transform:uppercase; color:#e6d6ff; }
+
+  /* GLOWING BIG CTA BUTTONS */
+  .btn{
+    font-family:'Baloo 2', cursive; font-weight:800; font-size:1.05rem;
+    padding:1.1rem 2.2rem; border-radius:50px; text-decoration:none; display:inline-block;
+    border:none; color:#fff; cursor:pointer; letter-spacing:0.01em;
+    background:linear-gradient(90deg, var(--pink), var(--pink-hot));
+    box-shadow: 0 0 20px 4px rgba(255,47,176,0.65), 0 0 46px 10px rgba(255,47,176,0.35), inset 0 0 12px rgba(255,255,255,0.25);
+    animation: glow-pulse 1.6s ease-in-out infinite;
+    transition: transform .2s;
+  }
+  .btn:hover{ transform:scale(1.05) rotate(-1deg); }
+  .btn.alt{ background:linear-gradient(90deg, var(--purple2), var(--purple)); box-shadow: 0 0 20px 4px rgba(155,48,255,0.65), 0 0 46px 10px rgba(155,48,255,0.35), inset 0 0 12px rgba(255,255,255,0.25); }
+  @keyframes glow-pulse{
+    0%,100%{ box-shadow: 0 0 20px 4px rgba(255,47,176,0.65), 0 0 46px 10px rgba(255,47,176,0.35), inset 0 0 12px rgba(255,255,255,0.25);}
+    50%{ box-shadow: 0 0 34px 10px rgba(255,47,176,0.9), 0 0 70px 18px rgba(255,47,176,0.5), inset 0 0 14px rgba(255,255,255,0.35);}
+  }
+  .cta-row{ display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+
+  .stars-row{ margin-top:1.4rem; font-size:1.1rem; color:var(--yellow); text-shadow:0 0 10px rgba(255,242,61,0.6); }
+  .stars-row span.count{ color:#e6d6ff; font-size:0.85rem; font-family:'JetBrains Mono', monospace; margin-left:0.4rem; }
+
+  /* ---------- SECTION HEADERS ---------- */
+  section{ padding:4.5rem 1.5rem; }
+  .wrap{ max-width:1080px; margin:0 auto; }
+  .sec-head{ text-align:center; margin-bottom:2.6rem; }
+  .flag{
+    display:inline-block; background:var(--purple); color:#fff; font-family:'JetBrains Mono', monospace;
+    font-weight:700; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase;
+    padding:0.3rem 0.9rem; border-radius:20px; margin-bottom:0.8rem;
+  }
+  .sec-head h2{
+    font-family:'Baloo 2', cursive; font-weight:800; font-size:clamp(1.8rem,4.5vw,2.8rem);
+    background:linear-gradient(90deg, var(--cyan), var(--pink-hot));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+
+  /* ---------- CREDENTIAL CARD ---------- */
+  .credential{
+    background:linear-gradient(155deg, rgba(155,48,255,0.18), rgba(255,47,176,0.12));
+    border:2px solid var(--pink); border-radius:22px;
+    display:grid; grid-template-columns:230px 1fr; overflow:hidden;
+    box-shadow:0 0 40px rgba(155,48,255,0.35);
+  }
+  .credential .photo{ position:relative; }
+  .credential .photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .credential .photo .stamp{ position:absolute; bottom:12px; right:12px; }
+  .credential .info{ padding:2rem 2.2rem; }
+  .credential .name{ font-family:'Baloo 2', cursive; font-weight:800; font-size:1.7rem; color:#fff; }
+  .credential .role{ color:var(--yellow); font-family:'JetBrains Mono', monospace; font-size:0.78rem; letter-spacing:0.05em; text-transform:uppercase; margin:0.2rem 0 1.3rem; }
+  .stat-grid{ display:grid; grid-template-columns:1fr 1fr; gap:0.9rem 1.6rem; }
+  .stat{ background:rgba(0,0,0,0.28); border-radius:10px; padding:0.7rem 0.9rem; border:1px solid rgba(255,255,255,0.12); }
+  .stat .k{ font-family:'JetBrains Mono', monospace; font-size:0.62rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--cyan); }
+  .stat .v{ font-size:0.95rem; margin-top:0.2rem; font-weight:600; }
+  @media (max-width:640px){ .credential{ grid-template-columns:1fr; } .credential .photo{ height:280px; } }
+
+  /* ---------- SERVICES ---------- */
+  .services{ display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+  @media (max-width:760px){ .services{ grid-template-columns:1fr; } }
+  .service-card{
+    position:relative;
+    background:rgba(255,255,255,0.05); border:2px solid var(--purple); border-radius:20px; padding:2.2rem;
+    display:flex; flex-direction:column; gap:1.1rem; overflow:visible;
+    box-shadow:0 0 26px rgba(155,48,255,0.28);
+  }
+  .service-card .corner-badge{
+    position:absolute; top:-14px; right:18px; background:var(--yellow); color:#3d0a5c;
+    font-family:'JetBrains Mono', monospace; font-weight:800; font-size:0.68rem;
+    padding:0.35rem 0.8rem; border-radius:8px; transform:rotate(4deg);
+    box-shadow:0 0 14px rgba(255,242,61,0.6);
+  }
+  .service-card h3{ font-family:'Baloo 2', cursive; font-weight:800; font-size:1.7rem; color:#fff; }
+  .service-card .price{ font-family:'JetBrains Mono', monospace; color:var(--cyan); font-size:1.1rem; }
+  .service-card .strike{ text-decoration:line-through; color:#c9b8e0; font-size:0.9rem; margin-right:0.5rem; }
+  .service-card ul{ margin:0; padding-left:1.2rem; color:#f0e4ff; line-height:1.8; font-size:0.95rem; }
+  .service-card ul li::marker{ color:var(--pink-hot); }
+
+  /* ---------- GALLERY ---------- */
+  .gallery{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; }
+  @media (max-width:760px){ .gallery{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:480px){ .gallery{ grid-template-columns:1fr; } }
+  .g-item{ position:relative; overflow:hidden; border-radius:16px; border:2px solid var(--pink); box-shadow:0 0 22px rgba(255,47,176,0.3); }
+  .g-item img{ width:100%; height:280px; object-fit:cover; display:block; transition:transform .5s ease; }
+  .g-item:hover img{ transform:scale(1.08); }
+  .g-cap{
+    position:absolute; left:0; right:0; bottom:0; padding:1rem 1rem 0.9rem;
+    background:linear-gradient(0deg, rgba(26,7,51,0.95), transparent);
+    font-size:0.86rem; color:#fff; font-weight:600;
+  }
+  .g-cap .lbl{ display:block; font-family:'JetBrains Mono', monospace; font-size:0.62rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--yellow); margin-bottom:0.25rem; }
+  .g-item .newtag{
+    position:absolute; top:10px; left:10px; background:var(--pink); color:#fff; font-family:'JetBrains Mono', monospace;
+    font-weight:700; font-size:0.62rem; padding:0.25rem 0.55rem; border-radius:6px; animation:pulse-pill 1.3s infinite;
+  }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testimonials{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.3rem; }
+  @media (max-width:760px){ .testimonials{ grid-template-columns:1fr; } }
+  .t-card{
+    background:rgba(255,255,255,0.05); border:2px solid var(--cyan); border-radius:16px; padding:1.6rem 1.7rem;
+    box-shadow:0 0 20px rgba(61,246,255,0.25);
+  }
+  .t-card .stars{ color:var(--yellow); margin-bottom:0.6rem; }
+  .t-card p.quote{ font-size:1.02rem; line-height:1.5; margin:0 0 0.9rem; font-weight:600; }
+  .t-card .who{ font-family:'JetBrains Mono', monospace; font-size:0.7rem; letter-spacing:0.05em; text-transform:uppercase; color:var(--cyan); }
+
+  /* ---------- BOOKING ---------- */
+  .booking{
+    background:linear-gradient(155deg, rgba(255,47,176,0.15), rgba(155,48,255,0.15));
+    border:2px solid var(--yellow); border-radius:22px; padding:2.4rem;
+    display:grid; grid-template-columns:1fr 1fr; gap:1.3rem;
+    box-shadow:0 0 40px rgba(255,242,61,0.25);
+  }
+  @media (max-width:640px){ .booking{ grid-template-columns:1fr; } }
+  .field{ display:flex; flex-direction:column; gap:0.4rem; }
+  .field label{ font-family:'JetBrains Mono', monospace; font-size:0.68rem; letter-spacing:0.05em; text-transform:uppercase; color:var(--cyan); }
+  .field select, .field input{
+    background:rgba(0,0,0,0.35); border:2px solid var(--purple); border-radius:10px; color:#fff;
+    padding:0.8rem 0.9rem; font-family:'Rubik', sans-serif; font-size:0.95rem;
+  }
+  .field.full{ grid-column:1/-1; text-align:center; }
+
+  footer{ padding:3rem 1.5rem 4rem; text-align:center; border-top:2px solid var(--pink); }
+  footer .fbrand{
+    font-family:'Baloo 2', cursive; font-weight:800; letter-spacing:0.02em; font-size:1.3rem;
+    background:linear-gradient(90deg, var(--pink-hot), var(--cyan));
+    -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:0.6rem;
+  }
+  footer p{ font-family:'JetBrains Mono', monospace; font-size:0.7rem; color:#c9b8e0; line-height:1.8; max-width:560px; margin:0.4rem auto 0; }
+
+  /* ---------- LIVE VISITOR COUNTER ---------- */
+  .live-counter{
+    position:fixed; top:80px; right:16px; z-index:40;
+    background:rgba(26,7,51,0.9); border:2px solid var(--cyan); border-radius:12px;
+    padding:0.6rem 0.9rem; font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    box-shadow:0 0 18px rgba(61,246,255,0.4); display:flex; align-items:center; gap:0.5rem;
+  }
+  .live-dot{ width:8px; height:8px; border-radius:50%; background:#3dff6e; box-shadow:0 0 8px #3dff6e; animation:pulse-pill 1s infinite; }
+  @media (max-width:640px){ .live-counter{ top:auto; bottom:90px; right:10px; font-size:0.66rem; } }
+
+  /* ---------- CHAT POPUP ---------- */
+  .chat-bubble{
+    position:fixed; bottom:20px; right:20px; z-index:41;
+    width:58px; height:58px; border-radius:50%;
+    background:linear-gradient(135deg, var(--pink), var(--purple));
+    display:flex; align-items:center; justify-content:center; font-size:1.5rem; cursor:pointer;
+    box-shadow:0 0 22px rgba(255,47,176,0.6); border:none; color:#fff;
+    animation: glow-pulse 1.8s ease-in-out infinite;
+  }
+  .chat-window{
+    position:fixed; bottom:90px; right:20px; z-index:41; width:280px; max-width:80vw;
+    background:#1a0733; border:2px solid var(--pink); border-radius:16px; overflow:hidden;
+    box-shadow:0 0 30px rgba(155,48,255,0.5); display:none; flex-direction:column;
+  }
+  .chat-window.open{ display:flex; }
+  .chat-head{ background:linear-gradient(90deg, var(--pink), var(--purple)); padding:0.7rem 1rem; font-family:'Baloo 2',cursive; font-weight:800; font-size:0.9rem; }
+  .chat-body{ padding:0.8rem; display:flex; flex-direction:column; gap:0.6rem; max-height:220px; overflow-y:auto; }
+  .chat-msg{ background:rgba(255,255,255,0.08); border-radius:10px; padding:0.5rem 0.7rem; font-size:0.78rem; line-height:1.4; }
+  .chat-msg.system{ color:var(--yellow); font-family:'JetBrains Mono', monospace; font-size:0.68rem; }
+  .chat-foot{ padding:0.6rem 0.8rem; border-top:1px solid rgba(255,255,255,0.1); }
+  .chat-foot input{ width:100%; background:rgba(0,0,0,0.35); border:1px solid var(--purple); border-radius:8px; color:#fff; padding:0.5rem 0.7rem; font-size:0.8rem; }
+  .chat-form{display:flex;gap:0.45rem;align-items:center;}
+  .chat-form input{flex:1;min-width:0;}
+  .chat-send{border:none;border-radius:8px;width:36px;height:34px;flex-shrink:0;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--pink),var(--purple));box-shadow:0 0 10px rgba(255,47,176,0.35);font-size:0.95rem;}
+  .chat-send:hover{filter:brightness(1.1);}
+
+
+  /* ---------- CHECKOUT PAGE ---------- */
+  #checkout-page{ display:none; min-height:100vh; padding:5rem 1.5rem; }
+  #checkout-page.open{ display:block; }
+  .checkout-wrap{ max-width:640px; margin:0 auto; }
+  .checkout-card{
+    background:rgba(255,255,255,0.05); border:2px solid var(--pink); border-radius:22px; padding:2.4rem;
+    box-shadow:0 0 40px rgba(255,47,176,0.35);
+  }
+  .checkout-card h2{
+    font-family:'Baloo 2', cursive; font-weight:800; font-size:1.9rem; margin:0 0 0.3rem;
+    background:linear-gradient(90deg, var(--cyan), var(--pink-hot));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .checkout-sub{ color:#e6d6ff; font-size:0.92rem; margin-bottom:1.6rem; }
+  .order-summary{ background:rgba(0,0,0,0.3); border-radius:12px; padding:1rem 1.2rem; margin-bottom:1.6rem; font-size:0.9rem; }
+  .order-summary .row{ display:flex; justify-content:space-between; padding:0.35rem 0; }
+  .order-summary .row.total{ border-top:1px dashed rgba(255,255,255,0.25); margin-top:0.4rem; padding-top:0.6rem; font-weight:700; color:var(--yellow); }
+  .checkout-form .field{ margin-bottom:1rem; }
+  .checkout-form label{ font-family:'JetBrains Mono', monospace; font-size:0.66rem; letter-spacing:0.05em; text-transform:uppercase; color:var(--cyan); display:block; margin-bottom:0.3rem; }
+  .checkout-form input, .checkout-form select{
+    width:100%; background:rgba(0,0,0,0.35); border:2px solid var(--purple); border-radius:10px; color:#fff;
+    padding:0.75rem 0.9rem; font-family:'Rubik', sans-serif; font-size:0.92rem;
+  }
+  .row-2{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .badges-row{ display:flex; gap:0.6rem; flex-wrap:wrap; margin:1.2rem 0; font-family:'JetBrains Mono', monospace; font-size:0.62rem; }
+  .mini-badge{ background:rgba(61,246,255,0.15); border:1px solid var(--cyan); color:var(--cyan); padding:0.3rem 0.6rem; border-radius:20px; }
+  .pay-btn{
+    width:100%; text-align:center; border:none; cursor:pointer;
+    font-family:'Baloo 2', cursive; font-weight:800; font-size:1.1rem; padding:1.1rem; border-radius:50px; color:#fff;
+    background:linear-gradient(90deg, var(--pink), var(--pink-hot));
+    box-shadow:0 0 20px 4px rgba(255,47,176,0.65), inset 0 0 12px rgba(255,255,255,0.25);
+    animation: glow-pulse 1.6s ease-in-out infinite;
+  }
+  .back-link{ display:inline-block; margin-top:1.2rem; color:#c9b8e0; font-family:'JetBrains Mono', monospace; font-size:0.75rem; text-decoration:none; cursor:pointer; }
+  .back-link:hover{ color:var(--yellow); }
+
+  /* processing overlay */
+  #processing-overlay{
+    position:fixed; inset:0; background:rgba(10,4,20,0.92); z-index:60; display:none;
+    align-items:center; justify-content:center; flex-direction:column; gap:1.2rem;
+  }
+  #processing-overlay.open{ display:flex; }
+  .spinner{
+    width:70px; height:70px; border-radius:50%;
+    border:6px solid rgba(255,47,176,0.25); border-top-color:var(--pink-hot);
+    animation:spin 0.9s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  #processing-overlay p{ font-family:'JetBrains Mono', monospace; color:var(--yellow); font-size:0.85rem; }
+
+  /* confirmation page */
+  #confirm-page{ display:none; min-height:100vh; padding:6rem 1.5rem; text-align:center; }
+  #confirm-page.open{ display:block; }
+  .confirm-emoji{ font-size:4rem; margin-bottom:1rem; }
+  #confirm-page h2{
+    font-family:'Baloo 2', cursive; font-weight:800; font-size:2.2rem;
+    background:linear-gradient(90deg, var(--cyan), var(--yellow));
+    -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:0.6rem;
+  }
+  #confirm-page p{ color:#e6d6ff; max-width:480px; margin:0 auto 1.6rem; line-height:1.6; }
+  .confirm-code{
+    display:inline-block; background:rgba(0,0,0,0.35); border:2px dashed var(--pink); border-radius:12px;
+    padding:0.8rem 1.4rem; font-family:'JetBrains Mono', monospace; color:var(--yellow); font-size:1rem; margin-bottom:1.6rem;
+  }
+
+  /* ---------- GREGORY CHAT SCREEN ---------- */
+  #gregory-chat-page{ display:none; min-height:100vh; padding:5rem 1.5rem 2rem; }
+  #gregory-chat-page.open{ display:block; }
+  .gchat-wrap{ max-width:520px; margin:0 auto; }
+  .gchat-card{
+    background:rgba(255,255,255,0.04); border:2px solid var(--pink); border-radius:22px; overflow:hidden;
+    box-shadow:0 0 40px rgba(255,47,176,0.35); display:flex; flex-direction:column; height:70vh; min-height:460px;
+  }
+  .gchat-head{
+    background:linear-gradient(90deg, var(--purple2), var(--pink)); padding:1rem 1.2rem;
+    display:flex; align-items:center; gap:0.8rem;
+  }
+  .gchat-avatar{ width:42px; height:42px; border-radius:50%; object-fit:cover; border:2px solid #fff; }
+  .gchat-name{ font-family:'Baloo 2', cursive; font-weight:800; font-size:1.05rem; }
+  .gchat-status{ font-family:'JetBrains Mono', monospace; font-size:0.65rem; color:#d6ffe0; display:flex; align-items:center; gap:0.3rem; }
+  .gchat-status .dot{ width:7px; height:7px; border-radius:50%; background:#3dff6e; box-shadow:0 0 6px #3dff6e; }
+  .gchat-messages{ flex:1; overflow-y:auto; padding:1.1rem; display:flex; flex-direction:column; gap:0.7rem; background:rgba(10,4,20,0.4); }
+  .gmsg{ max-width:78%; padding:0.6rem 0.9rem; border-radius:16px; font-size:0.88rem; line-height:1.4; }
+  .gmsg.them{ align-self:flex-start; background:rgba(255,255,255,0.1); border-bottom-left-radius:4px; }
+  .gmsg.me{ align-self:flex-end; background:linear-gradient(90deg, var(--pink), var(--purple)); border-bottom-right-radius:4px; }
+  .gchat-typing{ align-self:flex-start; padding:0.5rem 0.8rem; font-size:0.8rem; color:var(--text); opacity:0.7; font-style:italic; }
+  .gchat-input-row{ display:flex; gap:0.6rem; padding:0.8rem; border-top:1px solid rgba(255,255,255,0.12); }
+  .gchat-input-row input{
+    flex:1; background:rgba(0,0,0,0.35); border:2px solid var(--purple); border-radius:20px; color:#fff;
+    padding:0.65rem 1rem; font-family:'Rubik', sans-serif; font-size:0.88rem;
+  }
+  .gchat-send{
+    border:none; border-radius:50%; width:44px; height:44px; cursor:pointer; color:#fff; font-size:1.1rem;
+    background:linear-gradient(135deg, var(--pink), var(--purple));
+    box-shadow:0 0 14px rgba(255,47,176,0.5);
+    flex-shrink:0;
+  }
+
+  /* ================================================================
+     MOBILE PASS — phones (≤640px) and small phones (≤380px)
+     ================================================================ */
+  @media (max-width:640px){
+    section{ padding:3rem 1.1rem; }
+    .wrap{ width:100%; }
+
+    /* nav */
+    nav{ padding:0.8rem 1rem; }
+    .brand-name{ font-size:1.08rem; }
+    .badge-verified{ font-size:0.56rem; padding:0.16rem 0.4rem; }
+
+    /* ticker reads fine as-is but shrink a touch */
+    .ticker{ font-size:0.7rem; padding:0.4rem 0; }
+
+    /* hero */
+    .hero{ min-height:100svh; padding:5.5rem 1.1rem 2.5rem; align-items:flex-end; }
+    .hero-inner{ padding-bottom:1rem; }
+    .urgency-pill{ font-size:0.7rem; padding:0.35rem 0.8rem; }
+    .hero h1{ font-size:clamp(2rem, 9vw, 2.8rem); }
+    .hero p.sub{ font-size:0.96rem; padding:0 0.2rem; }
+    .countdown{ gap:0.5rem; }
+    .cbox{ min-width:58px; padding:0.55rem 0.7rem; }
+    .cbox .num{ font-size:1.2rem; }
+    .cta-row{ flex-direction:column; align-items:stretch; gap:0.7rem; }
+    .btn{ width:100%; text-align:center; font-size:0.96rem; padding:1rem 1.4rem; }
+    .stars-row{ font-size:0.98rem; }
+    .stars-row span.count{ display:block; margin-left:0; margin-top:0.2rem; }
+
+    /* section headers */
+    .sec-head h2{ font-size:1.6rem; }
+    .flag{ font-size:0.66rem; padding:0.25rem 0.7rem; }
+
+    /* credential card */
+    .credential{ border-radius:16px; }
+    .credential .photo{ height:220px; }
+    .credential .info{ padding:1.4rem 1.3rem; }
+    .credential .name{ font-size:1.4rem; }
+    .stat-grid{ grid-template-columns:1fr 1fr; gap:0.6rem; }
+    .stat{ padding:0.55rem 0.7rem; }
+    .stat .v{ font-size:0.86rem; }
+
+    /* services */
+    .services{ gap:1.1rem; }
+    .service-card{ padding:1.6rem 1.4rem; border-radius:16px; }
+    .service-card h3{ font-size:1.4rem; }
+    .corner-badge{ font-size:0.6rem; padding:0.3rem 0.6rem; top:-12px; right:14px; }
+
+    /* gallery */
+    .gallery{ gap:0.7rem; }
+    .g-item{ border-radius:12px; }
+    .g-item img{ height:180px; }
+    .g-cap{ font-size:0.76rem; padding:0.8rem 0.7rem 0.7rem; }
+
+    /* testimonials */
+    .t-card{ padding:1.3rem 1.4rem; border-radius:12px; }
+
+    /* booking */
+    .booking{ padding:1.6rem 1.3rem; border-radius:16px; }
+
+    /* live counter -> compact pill under ticker instead of overlapping hero */
+    .live-counter{
+      position:static; margin:0.6rem auto 0; width:max-content; max-width:90vw;
+      font-size:0.66rem; padding:0.45rem 0.7rem;
+    }
+
+    /* chat bubble & window */
+    .chat-bubble{ width:52px; height:52px; font-size:1.3rem; bottom:16px; right:16px; }
+    .chat-window{
+      right:8px; left:8px; width:auto; max-width:none; bottom:78px; border-radius:14px;
+    }
+    .chat-body{ max-height:38vh; }
+
+    /* checkout page */
+    #checkout-page{ padding:4.5rem 1rem 2rem; }
+    .checkout-card{ padding:1.6rem 1.3rem; border-radius:16px; }
+    .checkout-card h2{ font-size:1.5rem; }
+    .row-2{ grid-template-columns:1fr; gap:0.8rem; }
+    .checkout-form input, .checkout-form select,
+    .field input, .field select{ font-size:16px; } /* prevents iOS auto-zoom on focus */
+    .badges-row{ gap:0.4rem; }
+    .mini-badge{ font-size:0.58rem; padding:0.25rem 0.5rem; }
+    .pay-btn{ font-size:1rem; padding:1rem; }
+
+    /* processing overlay */
+    #processing-overlay p{ font-size:0.75rem; text-align:center; padding:0 1rem; }
+    .spinner{ width:56px; height:56px; border-width:5px; }
+
+    /* confirmation page */
+    #confirm-page{ padding:5rem 1.1rem 3rem; }
+    #confirm-page h2{ font-size:1.7rem; }
+    #confirm-page p{ font-size:0.92rem; }
+    .confirm-emoji{ font-size:3rem; }
+
+    /* gregory chat page */
+    #gregory-chat-page{ padding:4.5rem 0.8rem 1rem; }
+    .gchat-card{ height:78svh; min-height:400px; border-radius:16px; }
+    .gchat-head{ padding:0.8rem 1rem; }
+    .gchat-avatar{ width:36px; height:36px; }
+    .gchat-name{ font-size:0.96rem; }
+    .gmsg{ max-width:85%; font-size:0.86rem; }
+    .gchat-input-row{ padding:0.6rem; }
+    .gchat-input-row input{ font-size:16px; padding:0.6rem 0.9rem; } /* 16px prevents iOS zoom */
+
+    footer{ padding:2.5rem 1.1rem 3rem; }
+  }
+
+  /* extra-small phones */
+  @media (max-width:380px){
+    .hero h1{ font-size:1.8rem; }
+    .stat-grid{ grid-template-columns:1fr; }
+    .gallery{ grid-template-columns:1fr 1fr; }
+    .cbox{ min-width:52px; padding:0.45rem 0.5rem; }
+    .cbox .num{ font-size:1.05rem; }
+  }
+
+  /* respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sparkles" id="sparkles"></div>
+
+<div class="live-counter">
+  <span class="live-dot"></span>
+  <span id="live-count">312</span> people viewing this Ekitten right now
+</div>
+
+<div id="main-content">
+
+<div class="ticker"><div class="ticker-track">
+  ⚡ YOU HAVE BEEN SELECTED ⚡ CONGRATULATIONS ⚡ GREGORY IS AVAILABLE NEAR YOU ⚡ 1 SPOT REMAINING ⚡ ACT NOW BEFORE HE BROODS AGAIN ⚡ CLICK TO CLAIM YOUR EKITTEN ⚡ NOT CLICKBAIT (IT IS) ⚡
+</div></div>
+
+<nav>
+  <div class="brand">
+    <div class="brand-name">EK✨TTEN™</div>
+    <span class="badge-verified">✔ VERIFIED</span>
+  </div>
+  <div class="links">
+    <a href="#credential">Credential</a>
+    <a href="#services">Services</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#book">Claim Now</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="urgency-pill">🔥 CONGRATULATIONS — YOU'VE BEEN MATCHED 🔥</div>
+    <h1>Gregory Shannon is<br>available RIGHT NOW.</h1>
+    <p class="sub">1 (one) certified kickboxer / gothic kitten has entered your area. Local dogs and sunsets are already obsessed. Don't miss this exclusive, 100% real, definitely-not-a-scam opportunity.</p>
+
+    <div class="countdown" id="countdown">
+      <div class="cbox"><div class="num" id="hh">04</div><div class="lbl">Hours</div></div>
+      <div class="cbox"><div class="num" id="mm">59</div><div class="lbl">Mins</div></div>
+      <div class="cbox"><div class="num" id="ss">59</div><div class="lbl">Secs</div></div>
+    </div>
+
+    <div class="cta-row">
+      <a class="btn" href="#" onclick="openCheckout('dating');return false;">👉 CLAIM YOUR EKITTEN FREE 👈</a>
+      <a class="btn alt" href="#credential">See Proof It's Real</a>
+    </div>
+    <div class="stars-row">★★★★★ <span class="count">(4.9 out of 5 — 1 dog, 3 exes, 1 training partner)</span></div>
+  </div>
+</header>
+
+<section id="credential">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="flag">100% Verified Real</div>
+      <h2>The Credential</h2>
+    </div>
+    <div class="credential">
+      <div class="photo">
+        <img src="ekitten_assets/image1.jpg" alt="Gregory Shannon, credentialed">
+        <svg class="stamp" width="90" height="90" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="46" fill="none" stroke="#fff23d" stroke-width="3"/>
+          <circle cx="50" cy="50" r="38" fill="none" stroke="#3df6ff" stroke-width="1.5"/>
+          <text x="50" y="34" text-anchor="middle" fill="#fff23d" font-family="JetBrains Mono" font-size="7.5" font-weight="700" letter-spacing="1">VERIFIED</text>
+          <text x="50" y="68" text-anchor="middle" fill="#3df6ff" font-family="JetBrains Mono" font-size="7" font-weight="700" letter-spacing="1">100% REAL</text>
+          <path d="M50 40 L54 50 L50 60 L46 50 Z" fill="#ff2fb0"/>
+        </svg>
+      </div>
+      <div class="info">
+        <div class="name">Gregory Shannon</div>
+        <div class="role">⭐ Kickboxer · Gothic Kitten · Dog Uncle ⭐</div>
+        <div class="stat-grid">
+          <div class="stat"><div class="k">Fight Record</div><div class="v">Undefeated (in the ring)</div></div>
+          <div class="stat"><div class="k">Text-back Rate</div><div class="v">0 — 47, trending down</div></div>
+          <div class="stat"><div class="k">Feral Rating</div><div class="v">9.3 / 10 ⭐</div></div>
+          <div class="stat"><div class="k">Reach</div><div class="v">Longer than his attention span</div></div>
+          <div class="stat"><div class="k">Diet</div><div class="v">Protein, eyeliner, silence</div></div>
+          <div class="stat"><div class="k">Availability</div><div class="v">🟢 Online Now (probably)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="flag">Limited Time Offer</div>
+      <h2>Dating &amp; Hire</h2>
+    </div>
+    <div class="services">
+      <div class="service-card">
+        <div class="corner-badge">🔥 MOST POPULAR</div>
+        <div class="price"><span class="strike">$99.99</span> your undivided attention</div>
+        <h3>Dating Package</h3>
+        <ul>
+          <li>One (1) moody sunset stare, duration unconfirmed</li>
+          <li>Unlimited dog-petting privileges (dog not included)</li>
+          <li>Guaranteed shirtless flex within the first date, unprompted</li>
+          <li>Occasional eye contact, more if you're lucky</li>
+          <li>Will absolutely out-brood you</li>
+        </ul>
+        <a class="btn" href="#" onclick="openCheckout('dating');return false;" style="text-align:center;">Get Dating Package</a>
+      </div>
+      <div class="service-card">
+        <div class="corner-badge">⚡ ACT FAST</div>
+        <div class="price"><span class="strike">$249.99</span> enquire, bring snacks</div>
+        <h3>Hire Package</h3>
+        <ul>
+          <li>Birthday party intimidation, tastefully done</li>
+          <li>Emotional support kickboxing sessions</li>
+          <li>Will wear the leather dress to your event, no questions asked</li>
+          <li>Bodyguard duties (mostly symbolic)</li>
+          <li>Vibe consultant for anything gothic-adjacent</li>
+        </ul>
+        <a class="btn alt" href="#" onclick="openCheckout('hire');return false;" style="text-align:center;">Get Hire Package</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="flag">Leaked Evidence</div>
+      <h2>See For Yourself</h2>
+    </div>
+    <div class="gallery">
+      <div class="g-item">
+        <span class="newtag">NEW</span>
+        <img src="ekitten_assets/image2.jpg" alt="Gregory watching a sunset">
+        <div class="g-cap"><span class="lbl">Exhibit A</span>Deciding whether to text back or become one with the horizon.</div>
+      </div>
+      <div class="g-item">
+        <img src="ekitten_assets/image3.jpg" alt="Gregory with a golden retriever">
+        <div class="g-cap"><span class="lbl">Exhibit B</span>Certified good-boy handler. The dog's fine too.</div>
+      </div>
+      <div class="g-item">
+        <span class="newtag">HOT</span>
+        <img src="ekitten_assets/image4.jpg" alt="Gregory as kickboxing champion with crowd">
+        <div class="g-cap"><span class="lbl">Exhibit C</span>State champion. Still lost the argument about doing dishes.</div>
+      </div>
+      <div class="g-item">
+        <img src="ekitten_assets/image5.jpg" alt="Gregory in a gothic cat costume, flexing">
+        <div class="g-cap"><span class="lbl">Exhibit D</span>This happened. No further context will be provided.</div>
+      </div>
+      <div class="g-item">
+        <img src="ekitten_assets/image6.jpg" alt="Gregory with friends">
+        <div class="g-cap"><span class="lbl">Exhibit E</span>Rare footage of Gregory among mortals.</div>
+      </div>
+      <div class="g-item">
+        <img src="ekitten_assets/image7.jpg" alt="Gregory flexing after a fight">
+        <div class="g-cap"><span class="lbl">Exhibit F</span>Warming up. For what? Unclear. Never explained.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="flag">Not Fake, We Promise</div>
+      <h2>Word on the Street</h2>
+    </div>
+    <div class="testimonials">
+      <div class="t-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"He watched the sunset longer than he watched me. Would still date again."</p>
+        <div class="who">— Anonymous, Ex-Date</div>
+      </div>
+      <div class="t-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"10 out of 10. Would let him hold my leash again."</p>
+        <div class="who">— The Dog, Translated</div>
+      </div>
+      <div class="t-card">
+        <div class="stars">★★★★☆</div>
+        <p class="quote">"Left the ring undefeated. Left my group chat on read for three weeks."</p>
+        <div class="who">— Former Training Partner</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="book">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="flag">Final Step</div>
+      <h2>Claim Your Ekitten</h2>
+    </div>
+    <div class="booking">
+      <div class="field">
+        <label>Package</label>
+        <select><option>Dating</option><option>Hire</option><option>Undecided, terrified</option></select>
+      </div>
+      <div class="field">
+        <label>Preferred Vibe</label>
+        <select><option>Brooding</option><option>Feral</option><option>Surprisingly sweet</option></select>
+      </div>
+      <div class="field full">
+        <label>Notes for Gregory</label>
+        <input type="text" placeholder="e.g. please bring the leather dress">
+      </div>
+      <div class="field full">
+        <a class="btn" style="text-align:center;" href="#" onclick="openCheckout('dating');return false;">🎉 CLAIM NOW — LIMITED SPOTS 🎉</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fbrand">EKITTEN™</div>
+  <p>Ekitten™ is not a licensed dating or booking service, is not verified, and has approximately zero spots remaining because it never had any to begin with. Results not guaranteed. Kittens not included. Dog featured with permission; Gregory, less so. This site exists purely to roast a friend, made with love, questionable taste, one leather dress, and a deeply unnecessary countdown timer.</p>
+</footer>
+
+</div><!-- /main-content -->
+
+<!-- ============ CHECKOUT PAGE ============ -->
+<div id="checkout-page">
+  <div class="checkout-wrap">
+    <div class="checkout-card">
+      <h2>Complete Your Claim</h2>
+      <div class="checkout-sub">You're one step away from a certified Ekitten. This is definitely a real transaction.</div>
+
+      <div class="order-summary">
+        <div class="row"><span id="pkg-name">Dating Package</span><span>$99.99</span></div>
+        <div class="row"><span>"Handling &amp; Feralness" fee</span><span>$14.99</span></div>
+        <div class="row"><span>Processing (non-refundable, obviously)</span><span>$7.77</span></div>
+        <div class="row total"><span>Total Due Today</span><span id="pkg-total">$122.75</span></div>
+      </div>
+
+      <div class="badges-row">
+        <span class="mini-badge">🔒 100% Secure*</span>
+        <span class="mini-badge">✔ Verified Checkout</span>
+        <span class="mini-badge">⭐ 4.9/5 Rated</span>
+        <span class="mini-badge">↩ No Refunds</span>
+      </div>
+
+      <div class="checkout-form">
+        <div class="field">
+          <label>Full Name</label>
+          <input type="text" placeholder="Jane Doe">
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" placeholder="you@definitely-real-email.com">
+        </div>
+        <div class="row-2">
+          <div class="field">
+            <label>Card Number</label>
+            <input type="text" placeholder="4242 4242 4242 4242">
+          </div>
+          <div class="field">
+            <label>Expiry</label>
+            <input type="text" placeholder="12 / 34">
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="field">
+            <label>CVV</label>
+            <input type="text" placeholder="●●●">
+          </div>
+          <div class="field">
+            <label>Zip / Postcode</label>
+            <input type="text" placeholder="6000">
+          </div>
+        </div>
+        <button class="pay-btn" onclick="submitPayment()">💸 PAY NOW &amp; CLAIM EKITTEN 💸</button>
+        <a class="back-link" onclick="closeCheckout()">← back to safety</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PROCESSING OVERLAY ============ -->
+<div id="processing-overlay">
+  <div class="spinner"></div>
+  <p id="processing-text">VERIFYING YOUR FERAL COMPATIBILITY...</p>
+</div>
+
+<!-- ============ CONFIRMATION PAGE ============ -->
+<div id="confirm-page">
+  <div class="confirm-emoji">🎉🐈‍⬛🎉</div>
+  <h2>Congratulations! You Claimed Gregory.</h2>
+  <p>Your order has been "processed." An Ekitten Concierge will "contact" you within 3–5 emotional business days. Please "do not" attempt to actually charge this to a real card.</p>
+  <div class="confirm-code">ORDER #EK-<span id="order-num">00000</span></div>
+  <br>
+  <a class="btn" href="#" onclick="openGregoryChat();return false;">💬 Start Chatting With Gregory</a>
+  <br><br>
+  <a class="back-link" onclick="closeConfirm()">← Back to Ekitten Home</a>
+</div>
+
+<!-- ============ GREGORY CHAT PAGE ============ -->
+<div id="gregory-chat-page">
+  <div class="gchat-wrap">
+    <div class="gchat-card">
+      <div class="gchat-head">
+        <img class="gchat-avatar" src="ekitten_assets/image8.jpg" alt="Gregory">
+        <div>
+          <div class="gchat-name">Gregory Shannon</div>
+          <div class="gchat-status"><span class="dot"></span>Online (probably)</div>
+        </div>
+      </div>
+      <div class="gchat-messages" id="gchat-messages">
+        <div class="gmsg them">hey. you claimed me. that's a bold move.</div>
+      </div>
+      <div class="gchat-input-row">
+        <input type="text" id="gchat-input" placeholder="Say something to Gregory..." onkeydown="if(event.key==='Enter'){sendToGregory();}">
+        <button class="gchat-send" onclick="sendToGregory()">➤</button>
+      </div>
+    </div>
+    <br>
+    <a class="back-link" onclick="closeGregoryChat()">← Back to Ekitten Home</a>
+  </div>
+</div>
+
+<script>
+  // sparkles
+  const sp = document.getElementById('sparkles');
+  for(let i=0;i<28;i++){
+    const s = document.createElement('span');
+    s.style.left = Math.random()*100 + 'vw';
+    s.style.top = Math.random()*100 + 'vh';
+    s.style.animationDelay = (Math.random()*2.4) + 's';
+    sp.appendChild(s);
+  }
+  // fake countdown, resets so it never actually runs out (very on-brand)
+  let totalSeconds = 4*3600 + 59*60 + 59;
+  function tick(){
+    if(totalSeconds <= 0) totalSeconds = 4*3600 + 59*60 + 59;
+    totalSeconds--;
+    const h = Math.floor(totalSeconds/3600);
+    const m = Math.floor((totalSeconds%3600)/60);
+    const s = totalSeconds%60;
+    document.getElementById('hh').textContent = String(h).padStart(2,'0');
+    document.getElementById('mm').textContent = String(m).padStart(2,'0');
+    document.getElementById('ss').textContent = String(s).padStart(2,'0');
+  }
+  setInterval(tick, 1000);
+
+  // fake live visitor counter, wobbles around for realism
+  function wobbleCounter(){
+    const el = document.getElementById('live-count');
+    let n = parseInt(el.textContent, 10);
+    n += Math.floor(Math.random()*11) - 5;
+    if(n < 180) n = 180;
+    el.textContent = n;
+  }
+  setInterval(wobbleCounter, 2200);
+
+  // package pricing
+  const packages = {
+    dating: { name: 'Dating Package', price: 99.99, fee: 14.99, proc: 7.77 },
+    hire:   { name: 'Hire Package', price: 249.99, fee: 24.99, proc: 9.99 }
+  };
+
+  function openCheckout(pkgKey){
+    const pkg = packages[pkgKey] || packages.dating;
+    document.getElementById('pkg-name').textContent = pkg.name;
+    const total = (pkg.price + pkg.fee + pkg.proc).toFixed(2);
+    document.querySelector('.order-summary .row:nth-child(1) span:last-child').textContent = '$' + pkg.price.toFixed(2);
+    document.querySelector('.order-summary .row:nth-child(2) span:last-child').textContent = '$' + pkg.fee.toFixed(2);
+    document.querySelector('.order-summary .row:nth-child(3) span:last-child').textContent = '$' + pkg.proc.toFixed(2);
+    document.getElementById('pkg-total').textContent = '$' + total;
+    document.getElementById('main-content').style.display = 'none';
+    document.getElementById('checkout-page').classList.add('open');
+    window.scrollTo(0,0);
+  }
+  function closeCheckout(){
+    document.getElementById('checkout-page').classList.remove('open');
+    document.getElementById('main-content').style.display = '';
+    window.scrollTo(0,0);
+  }
+  function closeConfirm(){
+    document.getElementById('confirm-page').classList.remove('open');
+    document.getElementById('main-content').style.display = '';
+    window.scrollTo(0,0);
+  }
+
+  const processingLines = [
+    'VERIFYING YOUR FERAL COMPATIBILITY...',
+    'CONTACTING GREGORY (HE IS BROODING, PLEASE HOLD)...',
+    'CONFIRMING LEATHER DRESS AVAILABILITY...',
+    'CHECKING WITH THE DOG FOR APPROVAL...',
+    'DEFINITELY CHARGING YOUR CARD...'
+  ];
+  function submitPayment(){
+    document.getElementById('checkout-page').classList.remove('open');
+    const overlay = document.getElementById('processing-overlay');
+    overlay.classList.add('open');
+    let i = 0;
+    const txt = document.getElementById('processing-text');
+    const interval = setInterval(()=>{
+      i = (i+1) % processingLines.length;
+      txt.textContent = processingLines[i];
+    }, 700);
+    setTimeout(()=>{
+      clearInterval(interval);
+      overlay.classList.remove('open');
+      document.getElementById('order-num').textContent = Math.floor(10000 + Math.random()*89999);
+      document.getElementById('confirm-page').classList.add('open');
+      window.scrollTo(0,0);
+    }, 2600);
+  }
+
+
+  function sendSupportMessage(event){
+    event.preventDefault();
+    const input=document.getElementById('support-chat-input');
+    const text=input.value.trim();
+    if(!text)return;
+    const body=document.querySelector('#chat-window .chat-body');
+    const msg=document.createElement('div');
+    msg.className='chat-msg';
+    msg.style.alignSelf='flex-end';
+    msg.style.background='linear-gradient(90deg,var(--pink),var(--purple))';
+    msg.textContent=text;
+    body.appendChild(msg);
+    input.value='';
+    body.scrollTop=body.scrollHeight;
+    setTimeout(()=>{
+      const reply=document.createElement('div');
+      reply.className='chat-msg';
+      reply.textContent='Thanks for your message. A member of the Ekitten team will get back to you.';
+      body.appendChild(reply);
+      body.scrollTop=body.scrollHeight;
+    },700);
+  }
+
+  // chat popup
+  function toggleChat(){
+    document.getElementById('chat-window').classList.toggle('open');
+  }
+
+  // ===== Gregory chat screen =====
+  const gregoryLines = ["My reach is longer than my attention span, which isn't saying much.", "Quick thought: I almost smiled at my phone in public because of you, surprisingly.", "So, the dog has better texting etiquette than me, which is new.", "I don't cry. I just get very interested in the middle distance.", "Honestly, you're making the mysterious act harder to maintain, don't tell anyone.", "Quick thought: I'm one good message away from actually opening up, surprisingly.", "Real talk, my resting face says 'undefeated,' my texts say otherwise.", "So, my brooding reputation is currently at risk, surprisingly.", "Honestly, you're making the mysterious act harder to maintain, if I'm honest.", "I don't do small talk. I do medium-sized silences.", "I'm working on being less mysterious. It's going slowly, as intended.", "Every sunset is a personal challenge and I intend to win.", "Between us, you're making the mysterious act harder to maintain, which is new.", "Some men climb mountains. I sit at the bottom and think about it.", "Real talk, I practiced this response in the mirror, if I'm honest.", "I'm not avoiding the question, I'm building suspense.", "The sunset and I have an understanding.", "So, the dog has better texting etiquette than me, for what it's worth.", "Fun fact: my resting face says 'undefeated,' my texts say otherwise.", "Ask me a real question. I promise a semi-real answer.", "I wore the leather dress again. No, I won't explain why.", "Not gonna lie, you're better company than my training partner, for what it's worth.", "Between us, I practiced this response in the mirror.", "Quick thought: you're making the mysterious act harder to maintain.", "Fun fact: I practiced this response in the mirror, if I'm honest.", "So, you're better company than my training partner, surprisingly.", "Honestly, kickboxing is easier than keeping up a normal conversation, if I'm honest.", "Not gonna lie, the leather dress is non-negotiable, style-wise, surprisingly.", "I'll admit it — you've got my attention, and that's not easy to get.", "For the record, I'd rather be here than at the gym, which is new for me, if I'm honest.", "Champion belt's at home. I wear it around the house sometimes.", "Confession: I'm still thinking about that sunset, for what it's worth.", "Between us, kickboxing is easier than keeping up a normal conversation, don't tell anyone.", "So, you're making the mysterious act harder to maintain, for what it's worth.", "Confession: you're making the mysterious act harder to maintain, surprisingly.", "I'll have you know I practiced this level of nonchalance for years.", "I flex sometimes for no reason. It's a lifestyle, not a bit.", "Fun fact: you're better company than my training partner, if I'm honest.", "I was going to play it cool, but you're making that difficult.", "So, I'd rather be here than at the gym, which is new for me, don't tell anyone.", "I'm not moody, I'm just extremely atmospheric.", "I don't do compliments often, so take this one seriously: you're funny.", "Honestly, I practiced this response in the mirror, for what it's worth.", "I have a very specific skill set. Mostly kicking and staring.", "Gothic isn't an aesthetic, it's a slow Tuesday afternoon.", "Confession: you're better company than my training partner.", "Confession: the dog has better texting etiquette than me.", "The dog says hi. He's better at this than I am.", "Fun fact: I'm one good message away from actually opening up, surprisingly.", "Update: I almost smiled at my phone in public because of you, for what it's worth.", "I was born mysterious. It's on my birth certificate.", "Quick thought: my resting face says 'undefeated,' my texts say otherwise, don't tell anyone.", "Somehow you're more interesting than hitting things really hard. Rare.", "Honestly, I'd rather be here than at the gym, which is new for me, for what it's worth.", "Update: kickboxing is easier than keeping up a normal conversation, don't tell anyone.", "For the record, you're better company than my training partner, which is new.", "Confession: my brooding reputation is currently at risk, surprisingly.", "Not gonna lie, the leather dress is non-negotiable, style-wise, if I'm honest.", "If I said you were growing on me, would that ruin the mysterious thing?", "Quick thought: I only stare at sunsets this long when I'm distracted, and I'm distracted.", "For the record, I almost smiled at my phone in public because of you, which is new.", "Sorry, was reviewing footage of myself hitting things. Very productive.", "Between us, you're better company than my training partner, for what it's worth.", "Quick thought: I'd rather be here than at the gym, which is new for me, for what it's worth.", "For the record, my resting face says 'undefeated,' my texts say otherwise, for what it's worth.", "For the record, I'm still thinking about that sunset, if I'm honest.", "For the record, kickboxing is easier than keeping up a normal conversation, for what it's worth.", "Fun fact: I'm one good message away from actually opening up.", "For the record, I practiced this response in the mirror, surprisingly.", "For the record, I'm still thinking about that sunset, surprisingly.", "Confession: I'm one good message away from actually opening up, for what it's worth.", "I have a whole personality, it's just mostly vibes and shadows.", "I was going to text back sooner but I got distracted by a cloud.", "I have a black belt in something. Don't ask which, it's classified.", "I sparred today. I lost to my own emotional unavailability instead.", "I was gone because the dog needed emotional support. Mine, not his.", "Update: you're making the mysterious act harder to maintain.", "I'd trust that dog with my life and most of my secrets.", "Honestly, my resting face says 'undefeated,' my texts say otherwise, if I'm honest.", "You're cutting through the broodiness faster than most people manage.", "Quick thought: I practiced this response in the mirror, don't tell anyone.", "Update: the leather dress is non-negotiable, style-wise, if I'm honest.", "So, kickboxing is easier than keeping up a normal conversation, if I'm honest.", "Not gonna lie, I'm doing surprisingly okay at this whole 'talking to someone' thing, don't tell anyone.", "Update: I'm still thinking about that sunset, which is new.", "Kickboxing taught me discipline, focus, and how to ignore my phone.", "Real talk, kickboxing is easier than keeping up a normal conversation.", "Fun fact: I only stare at sunsets this long when I'm distracted, and I'm distracted, if I'm honest.", "Real talk, the group chat is asking who's got my attention lately, if I'm honest.", "Fun fact: kickboxing is easier than keeping up a normal conversation, if I'm honest.", "Real talk, the leather dress is non-negotiable, style-wise, if I'm honest.", "For the record, I'm one good message away from actually opening up, don't tell anyone.", "I don't do emojis. This is as expressive as I get.", "So, I'm one good message away from actually opening up.", "Quick thought: you're better company than my training partner, for what it's worth.", "Confession: you're better company than my training partner, surprisingly.", "You get bonus points for keeping up with my nonsense.", "I was going to send something broody, but you deserve better than that.", "Update: I'm still thinking about that sunset, for what it's worth.", "I own more black clothing than actual personality traits.", "Between us, you're making the mysterious act harder to maintain, don't tell anyone.", "Quick thought: I'm one good message away from actually opening up, don't tell anyone.", "Quick thought: my resting face says 'undefeated,' my texts say otherwise.", "Not gonna lie, my brooding reputation is currently at risk, which is new.", "For the record, my brooding reputation is currently at risk, if I'm honest.", "I have a face that says 'undefeated champion' and a heart that says 'please text back.'", "Real talk, you're better company than my training partner, surprisingly.", "I'm one part gothic, two parts guy who hits things professionally.", "Between us, I only stare at sunsets this long when I'm distracted, and I'm distracted, if I'm honest.", "Honestly, I'm one good message away from actually opening up, surprisingly.", "Update: my brooding reputation is currently at risk.", "Not gonna lie, I'm one good message away from actually opening up, for what it's worth.", "Fun fact: I only stare at sunsets this long when I'm distracted, and I'm distracted.", "I warm up even when there's nothing to warm up for.", "I'm undefeated in the ring and 0-47 at texting back. Balance.", "That's a great question. I'll answer it after this staring contest.", "Confession: I only stare at sunsets this long when I'm distracted, and I'm distracted.", "Real talk, my brooding reputation is currently at risk, surprisingly.", "For the record, you're better company than my training partner.", "So, you're making the mysterious act harder to maintain.", "You're doing that thing where you make silence feel less lonely.", "Between us, the group chat is asking who's got my attention lately, don't tell anyone.", "Between us, you're better company than my training partner, don't tell anyone.", "I once benched a personal best and then thought about you. Unrelated. Or not.", "So, I practiced this response in the mirror, for what it's worth.", "Quick thought: my brooding reputation is currently at risk, if I'm honest.", "For the record, my brooding reputation is currently at risk.", "Golden retrievers understand me on a spiritual level.", "Quick thought: I'm still thinking about that sunset, if I'm honest.", "Honestly, you're better company than my training partner.", "Real talk, I'm one good message away from actually opening up, which is new.", "Confession: my brooding reputation is currently at risk, which is new.", "Quick thought: the dog has better texting etiquette than me, for what it's worth.", "You're the first thing that's out-vibed my staring contest with the horizon.", "Quick thought: you're making the mysterious act harder to maintain, surprisingly.", "Sorry, I was staring at the horizon. What were you saying?", "Real talk, I'd rather be here than at the gym, which is new for me, for what it's worth.", "I'm working on my brooding form. Feedback welcome.", "My horoscope said 'be less mysterious today.' I'm ignoring it.", "Careful, you're making the brooding guy smile in public.", "So, my resting face says 'undefeated,' my texts say otherwise, surprisingly.", "Real talk, you're making the mysterious act harder to maintain, surprisingly.", "So, kickboxing is easier than keeping up a normal conversation, for what it's worth.", "Update: you're better company than my training partner, don't tell anyone.", "Update: the dog has better texting etiquette than me.", "Not gonna lie, you're better company than my training partner, if I'm honest.", "Fun fact: you're better company than my training partner, for what it's worth.", "Honestly, I'm still thinking about that sunset, which is new.", "Not gonna lie, kickboxing is easier than keeping up a normal conversation, which is new.", "I'm the human equivalent of a slow, dramatic movie zoom-in.", "Update: I'd rather be here than at the gym, which is new for me, for what it's worth.", "Honestly, the group chat is asking who's got my attention lately, if I'm honest.", "I have strong opinions about sunsets and weak opinions about everything else.", "The dog is a better listener than me, just so you know upfront.", "My love language is prolonged, unexplained eye contact.", "So, I'd rather be here than at the gym, which is new for me, which is new.", "For the record, the dog has better texting etiquette than me.", "Fun fact: kickboxing is easier than keeping up a normal conversation, which is new.", "Honestly, the group chat is asking who's got my attention lately, for what it's worth.", "Confession: I'm doing surprisingly okay at this whole 'talking to someone' thing, if I'm honest.", "Update: you're better company than my training partner.", "Training was good today. I hit a bag until it understood me.", "I read your message three times. Very compelling stuff.", "Quick thought: kickboxing is easier than keeping up a normal conversation, surprisingly.", "Real talk, I'd rather be here than at the gym, which is new for me, if I'm honest.", "I'd trade a sunset for this conversation. That's a big deal for me.", "Honestly, the dog has better texting etiquette than me, don't tell anyone.", "I once wrote a whole paragraph and deleted it. This is the short version.", "My group chat thinks I'm dead. I'm just busy being enigmatic.", "Quick thought: I almost smiled at my phone in public because of you, for what it's worth.", "So, I practiced this response in the mirror, which is new.", "Update: the leather dress is non-negotiable, style-wise, surprisingly.", "I might actually text back on time for you. Might.", "I have twelve unread messages and you're the only one I'm answering.", "So, I'm still thinking about that sunset, for what it's worth.", "For the record, my brooding reputation is currently at risk, for what it's worth.", "Real talk, I'm one good message away from actually opening up, if I'm honest.", "My dog approves of you. That's basically a background check.", "I was going for 'romantic tragedy.' I think I nailed it.", "I don't ghost people, I just take very long, very meaningful pauses.", "Between us, you're making the mysterious act harder to maintain.", "Update: I'm still thinking about that sunset, if I'm honest.", "For the record, my brooding reputation is currently at risk, don't tell anyone.", "For the record, you're making the mysterious act harder to maintain, if I'm honest.", "Not gonna lie, the dog has better texting etiquette than me, don't tell anyone.", "I once stared at the ocean for forty-five minutes. No regrets.", "Real talk, I'm still thinking about that sunset, which is new.", "You might be the only notification I actually look forward to.", "Okay, that message actually made me smile. Rare occurrence, savor it.", "I'm allergic to small talk and mildly suspicious of bright colors.", "Eyeliner is just war paint for emotionally guarded men.", "Between us, the dog has better texting etiquette than me, don't tell anyone.", "Confession: I'd rather be here than at the gym, which is new for me, which is new.", "Not gonna lie, my brooding reputation is currently at risk, for what it's worth.", "Not gonna lie, I'd rather be here than at the gym, which is new for me, which is new.", "So, the leather dress is non-negotiable, style-wise, if I'm honest.", "You should see my footwork. It's the only thing I'm consistent with.", "Quick thought: I'm doing surprisingly okay at this whole 'talking to someone' thing, surprisingly.", "I'm low-maintenance except for the leather dress upkeep.", "So, I only stare at sunsets this long when I'm distracted, and I'm distracted, surprisingly."];
+
+  function openGregoryChat(){
+    document.getElementById('confirm-page').classList.remove('open');
+    document.getElementById('gregory-chat-page').classList.add('open');
+    window.scrollTo(0,0);
+  }
+  function closeGregoryChat(){
+    document.getElementById('gregory-chat-page').classList.remove('open');
+    document.getElementById('main-content').style.display = '';
+    window.scrollTo(0,0);
+  }
+
+  function sendToGregory(){
+    const input = document.getElementById('gchat-input');
+    const text = input.value.trim();
+    if(!text) return;
+    const box = document.getElementById('gchat-messages');
+
+    const mine = document.createElement('div');
+    mine.className = 'gmsg me';
+    mine.textContent = text;
+    box.appendChild(mine);
+    input.value = '';
+    box.scrollTop = box.scrollHeight;
+
+    const typing = document.createElement('div');
+    typing.className = 'gchat-typing';
+    typing.textContent = 'Gregory is typing...';
+    box.appendChild(typing);
+    box.scrollTop = box.scrollHeight;
+
+    const delay = 700 + Math.random()*1100;
+    setTimeout(()=>{
+      typing.remove();
+      const reply = document.createElement('div');
+      reply.className = 'gmsg them';
+      reply.textContent = gregoryLines[Math.floor(Math.random()*gregoryLines.length)];
+      box.appendChild(reply);
+      box.scrollTop = box.scrollHeight;
+    }, delay);
+  }
+</script>
+
+<!-- ============ CHAT WIDGET ============ -->
+<button class="chat-bubble" onclick="toggleChat()">💬</button>
+<div class="chat-window" id="chat-window">
+  <div class="chat-head">Ekitten Support 🐈‍⬛</div>
+  <div class="chat-body">
+    <div class="chat-msg system">Chat started 0 seconds ago</div>
+    <div class="chat-msg">Hi!! You've been selected for a FREE Ekitten consultation 🎉</div>
+    <div class="chat-msg">312 people are currently viewing Gregory's profile, act fast!</div>
+    <div class="chat-msg">Is there anything I can help you claim today?</div>
+  </div>
+  <div class="chat-foot">
+    <form class="chat-form" onsubmit="sendSupportMessage(event)">
+      <input id="support-chat-input" type="text" placeholder="Type a message..." autocomplete="off">
+      <button type="submit" class="chat-send" aria-label="Send message">➤</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>
