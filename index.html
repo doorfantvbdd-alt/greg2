@@ -1,5 +1,4 @@
-<!DOCTYPE html> 
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -501,6 +500,134 @@
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
   }
+
+  /* ================================================================
+     NEW BIG FEATURES: QUIZ, GREGORY CAM, REVIEW WALL, SCAM METER
+     ================================================================ */
+
+  /* ---- Feral Compatibility Quiz ---- */
+  #quiz-overlay{
+    display:none; position:fixed; inset:0; z-index:999; background:rgba(10,2,20,0.88);
+    backdrop-filter:blur(6px); align-items:center; justify-content:center; padding:1.5rem;
+  }
+  #quiz-overlay.open{ display:flex; }
+  .quiz-card{
+    background:linear-gradient(160deg, var(--bg2), var(--bg1));
+    border:3px solid var(--purple); border-radius:22px; max-width:520px; width:100%;
+    padding:2rem; box-shadow:0 0 60px rgba(155,48,255,0.5); position:relative;
+  }
+  .quiz-card h3{ font-family:'Baloo 2'; font-size:1.5rem; margin:0 0 0.3rem; color:var(--yellow); }
+  .quiz-progress{
+    height:8px; border-radius:8px; background:rgba(255,255,255,0.12); overflow:hidden; margin:0.8rem 0 1.4rem;
+  }
+  .quiz-progress-fill{ height:100%; background:linear-gradient(90deg,var(--pink),var(--cyan)); transition:width 0.3s ease; }
+  .quiz-question{ font-size:1.05rem; margin-bottom:1.1rem; }
+  .quiz-options{ display:flex; flex-direction:column; gap:0.7rem; }
+  .quiz-opt{
+    background:rgba(255,255,255,0.06); border:2px solid rgba(255,255,255,0.14); color:var(--text);
+    padding:0.85rem 1.1rem; border-radius:12px; text-align:left; font-family:'Rubik'; font-size:0.96rem;
+    cursor:pointer; transition:all 0.2s ease;
+  }
+  .quiz-opt:hover{ background:var(--purple2); border-color:var(--pink-hot); transform:translateX(4px); }
+  .quiz-result{ text-align:center; }
+  .quiz-score{
+    font-family:'Baloo 2'; font-size:3.2rem; color:var(--yellow); margin:0.6rem 0;
+    text-shadow:0 0 20px rgba(255,242,61,0.6);
+  }
+  .quiz-close-x{
+    position:absolute; top:14px; right:16px; background:none; border:none; color:var(--text);
+    font-size:1.4rem; cursor:pointer; opacity:0.7;
+  }
+  .quiz-close-x:hover{ opacity:1; }
+
+  /* ---- Gregory Cam ---- */
+  .cam-wrap{
+    background:#0a0416; border:3px solid var(--purple2); border-radius:20px; overflow:hidden;
+    position:relative; box-shadow:0 0 40px rgba(155,48,255,0.35);
+  }
+  .cam-video{
+    aspect-ratio:16/9; width:100%; position:relative; overflow:hidden;
+    background:
+      repeating-linear-gradient(0deg, #000 0px, #000 2px, #0a0416 2px, #0a0416 4px),
+      radial-gradient(circle at 50% 40%, #2a0d4a, #0a0416 75%);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .cam-buffer{ text-align:center; z-index:2; transition:opacity 0.5s ease; }
+  .cam-buffer.hide{ opacity:0; pointer-events:none; }
+  .cam-footage{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1;
+    opacity:0; transition:opacity 0.6s ease;
+  }
+  .cam-footage.show{ opacity:1; }
+  .cam-buffer .ring{
+    width:56px; height:56px; border:5px solid rgba(255,255,255,0.15); border-top-color:var(--pink-hot);
+    border-radius:50%; margin:0 auto 0.8rem; animation:spin 1s linear infinite;
+  }
+  .cam-buffer p{ font-family:'JetBrains Mono'; font-size:0.75rem; color:var(--cyan); letter-spacing:0.04em; }
+  .cam-live-badge{
+    position:absolute; top:12px; left:12px; background:#ff2f2f; color:#fff; font-weight:800;
+    font-size:0.7rem; padding:0.25rem 0.6rem; border-radius:6px; z-index:3; display:flex; align-items:center; gap:0.35rem;
+    font-family:'JetBrains Mono';
+  }
+  .cam-live-badge .pulse-dot{
+    width:8px; height:8px; background:#fff; border-radius:50%; animation:twinkle 1.2s infinite ease-in-out;
+  }
+  .cam-viewers{
+    position:absolute; top:12px; right:12px; background:rgba(0,0,0,0.6); color:var(--text);
+    font-size:0.72rem; padding:0.25rem 0.6rem; border-radius:6px; z-index:3; font-family:'JetBrains Mono';
+  }
+  .cam-caption{
+    position:absolute; bottom:44px; left:50%; transform:translateX(-50%); z-index:3; text-align:center;
+    background:rgba(0,0,0,0.55); padding:0.4rem 1rem; border-radius:8px; font-size:0.82rem; max-width:85%;
+  }
+  .cam-chat{
+    background:#150626; padding:0.7rem 1rem; height:140px; overflow:hidden; position:relative;
+    border-top:2px solid var(--purple2);
+  }
+  .cam-chat-inner{ display:flex; flex-direction:column; gap:0.4rem; }
+  .cam-chat-msg{ font-size:0.78rem; font-family:'JetBrains Mono'; opacity:0; animation:camFadeIn 0.4s ease forwards; }
+  .cam-chat-msg b{ color:var(--pink-hot); }
+  @keyframes camFadeIn{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---- Review Wall (leave-a-review) ---- */
+  .review-form{
+    max-width:560px; margin:2.2rem auto 0; background:rgba(255,255,255,0.05);
+    border:2px solid var(--purple2); border-radius:16px; padding:1.4rem 1.5rem;
+  }
+  .review-form h4{ margin:0 0 0.8rem; font-family:'Baloo 2'; color:var(--yellow); }
+  .review-form textarea{
+    width:100%; min-height:70px; background:rgba(255,255,255,0.06); border:2px solid rgba(255,255,255,0.15);
+    border-radius:10px; color:var(--text); padding:0.7rem 0.9rem; font-family:'Rubik'; font-size:0.9rem; resize:vertical;
+  }
+  .review-form button{
+    margin-top:0.8rem; background:var(--pink); color:#fff; border:none; font-weight:700;
+    padding:0.7rem 1.3rem; border-radius:10px; cursor:pointer; font-family:'Rubik';
+  }
+  .t-card.new-review{ border:2px solid var(--yellow); }
+  .t-card .gregory-reply{
+    margin-top:0.7rem; padding-top:0.6rem; border-top:1px dashed rgba(255,255,255,0.2);
+    font-size:0.8rem; font-style:italic; opacity:0.85;
+  }
+
+  /* ---- Scam-o-meter easter egg ---- */
+  #scam-meter-overlay{
+    display:none; position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,0.9);
+    align-items:center; justify-content:center; padding:1.5rem;
+  }
+  #scam-meter-overlay.open{ display:flex; }
+  .scam-card{
+    background:#111; border:4px dashed var(--yellow); border-radius:18px; padding:2rem; max-width:480px;
+    text-align:center;
+  }
+  .scam-needle-wrap{ width:100%; height:14px; background:linear-gradient(90deg,#2ecc71,var(--yellow),#ff3b3b); border-radius:8px; margin:1.2rem 0; position:relative; }
+  .scam-needle{ position:absolute; top:-6px; width:4px; height:26px; background:#fff; border-radius:2px; left:6%; transition:left 2.2s cubic-bezier(.2,.9,.2,1); }
+
+  @media (max-width:640px){
+    .cam-video{ aspect-ratio:4/3; }
+    .cam-chat{ height:120px; }
+    .quiz-card{ padding:1.5rem; }
+    .quiz-score{ font-size:2.4rem; }
+  }
 </style>
 </head>
 <body>
@@ -521,12 +648,14 @@
 <nav>
   <div class="brand">
     <div class="brand-name">EK✨TTEN™</div>
-    <span class="badge-verified">✔ VERIFIED</span>
+    <span class="badge-verified" style="cursor:pointer;" onclick="openScamMeter();return false;">✔ VERIFIED</span>
   </div>
   <div class="links">
     <a href="#credential">Credential</a>
     <a href="#services">Services</a>
     <a href="#gallery">Gallery</a>
+    <a href="#gregorycam">Gregory Cam</a>
+    <a href="#" onclick="openQuiz();return false;">Feral Quiz</a>
     <a href="#book">Claim Now</a>
   </div>
 </nav>
@@ -546,6 +675,7 @@
     <div class="cta-row">
       <a class="btn" href="#" onclick="openCheckout('dating');return false;">👉 CLAIM YOUR EKITTEN FREE 👈</a>
       <a class="btn alt" href="#credential">See Proof It's Real</a>
+      <a class="btn alt" href="#" onclick="openQuiz();return false;">🧪 Take the Feral Quiz</a>
     </div>
     <div class="stars-row">★★★★★ <span class="count">(4.9 out of 5 — 1 dog, 3 exes, 1 training partner)</span></div>
   </div>
@@ -658,13 +788,37 @@
   </div>
 </section>
 
+<section id="gregorycam">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="flag">24/7 "Live"</div>
+      <h2>Gregory Cam</h2>
+    </div>
+    <div class="cam-wrap">
+      <div class="cam-video" id="cam-video-box">
+        <div class="cam-live-badge"><span class="pulse-dot"></span>LIVE</div>
+        <div class="cam-viewers" id="cam-viewers">👁 412 watching</div>
+        <div class="cam-buffer" id="cam-buffer">
+          <div class="ring"></div>
+          <p id="cam-buffer-text">BUFFERING GREGORY'S EMOTIONAL AVAILABILITY...</p>
+        </div>
+        <video id="cam-footage" class="cam-footage" src="gregory_cam.mp4" muted loop playsinline preload="auto"></video>
+        <div class="cam-caption" id="cam-caption">Gregory is currently: staring at something off-camera.</div>
+      </div>
+      <div class="cam-chat">
+        <div class="cam-chat-inner" id="cam-chat-inner"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="testimonials">
   <div class="wrap">
     <div class="sec-head">
       <div class="flag">Not Fake, We Promise</div>
       <h2>Word on the Street</h2>
     </div>
-    <div class="testimonials">
+    <div class="testimonials" id="testimonials-list">
       <div class="t-card">
         <div class="stars">★★★★★</div>
         <p class="quote">"He watched the sunset longer than he watched me. Would still date again."</p>
@@ -680,6 +834,13 @@
         <p class="quote">"Left the ring undefeated. Left my group chat on read for three weeks."</p>
         <div class="who">— Former Training Partner</div>
       </div>
+    </div>
+
+    <div class="review-form">
+      <h4>Leave Your Own Totally Real Review</h4>
+      <textarea id="review-input" placeholder="e.g. He out-brooded my entire family reunion and I have never been prouder"></textarea>
+      <br>
+      <button onclick="submitReview()">✍️ Post Review (Not Verified By Anyone)</button>
     </div>
   </div>
 </section>
@@ -813,6 +974,25 @@
     </div>
     <br>
     <a class="back-link" onclick="closeGregoryChat()">← Back to Ekitten Home</a>
+  </div>
+</div>
+
+<!-- ============ FERAL COMPATIBILITY QUIZ ============ -->
+<div id="quiz-overlay">
+  <div class="quiz-card">
+    <button class="quiz-close-x" onclick="closeQuiz()">✕</button>
+    <div id="quiz-body"></div>
+  </div>
+</div>
+
+<!-- ============ SCAM-O-METER EASTER EGG ============ -->
+<div id="scam-meter-overlay">
+  <div class="scam-card">
+    <h3 style="font-family:'Baloo 2'; color:var(--yellow); margin:0;">🚨 OFFICIAL SCAM-O-METER™ 🚨</h3>
+    <p style="opacity:0.85; font-size:0.9rem;">Independently "verified" by nobody in particular.</p>
+    <div class="scam-needle-wrap"><div class="scam-needle" id="scam-needle"></div></div>
+    <p id="scam-result" style="font-family:'JetBrains Mono'; font-size:0.85rem;">Calculating...</p>
+    <button onclick="closeScamMeter()" style="margin-top:1rem; background:var(--yellow); color:#1a0733; border:none; font-weight:800; padding:0.6rem 1.2rem; border-radius:8px; cursor:pointer;">Okay, fair</button>
   </div>
 </div>
 
@@ -976,6 +1156,249 @@
       box.appendChild(reply);
       box.scrollTop = box.scrollHeight;
     }, delay);
+  }
+
+  /* ================================================================
+     FERAL COMPATIBILITY QUIZ
+     ================================================================ */
+  const quizQuestions = [
+    {
+      q: "How do you feel about eye contact?",
+      opts: [
+        "Terrifying but I want more",
+        "I only make it with dogs",
+        "I stare back harder, it's a competition now",
+        "What eye contact"
+      ]
+    },
+    {
+      q: "Pick a date activity:",
+      opts: [
+        "Silently watch a sunset for 45 minutes",
+        "Get emotionally supported by a golden retriever",
+        "Attend a kickboxing match, cry a little",
+        "Discuss the leather dress at length"
+      ]
+    },
+    {
+      q: "Your texting style is best described as:",
+      opts: [
+        "Reply in 3-5 emotional business days",
+        "Double text then immediately regret it",
+        "Leave on read, out of respect",
+        "I communicate exclusively in vibes"
+      ]
+    },
+    {
+      q: "A stranger calls you 'mysterious.' You:",
+      opts: [
+        "Say nothing, walk into the fog",
+        "Secretly scream internally with joy",
+        "Deny it while wearing full eyeliner",
+        "Immediately become 20% more mysterious"
+      ]
+    }
+  ];
+  const quizRoasts = [
+    { min: 0, max: 25, title: "1% Feral", line: "You and Gregory would last exactly one (1) sunset before someone had to say something out loud." },
+    { min: 26, max: 50, title: "34% Feral", line: "Compatible in theory. In practice you'd both just stand there being mysterious at each other until the venue closed." },
+    { min: 51, max: 75, title: "72% Feral", line: "Alarmingly good match. You'd both brood so hard the dog would have to intervene." },
+    { min: 76, max: 100, title: "99% Feral", line: "Certified soulmate-tier. Please seek professional help, or Gregory, whichever is available first." }
+  ];
+  let quizIndex = 0;
+  let quizScore = 0;
+
+  function openQuiz(){
+    quizIndex = 0;
+    quizScore = 0;
+    document.getElementById('quiz-overlay').classList.add('open');
+    renderQuizQuestion();
+  }
+  function closeQuiz(){
+    document.getElementById('quiz-overlay').classList.remove('open');
+  }
+  function renderQuizQuestion(){
+    const body = document.getElementById('quiz-body');
+    const total = quizQuestions.length;
+    if(quizIndex >= total){
+      renderQuizResult();
+      return;
+    }
+    const question = quizQuestions[quizIndex];
+    const pct = Math.round((quizIndex / total) * 100);
+    let optsHtml = '';
+    question.opts.forEach((opt, i) => {
+      optsHtml += `<button class="quiz-opt" onclick="answerQuiz(${i})">${opt}</button>`;
+    });
+    body.innerHTML = `
+      <h3>Feral Compatibility Quiz</h3>
+      <div class="quiz-progress"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
+      <div class="quiz-question">Q${quizIndex + 1} of ${total}: ${question.q}</div>
+      <div class="quiz-options">${optsHtml}</div>
+    `;
+  }
+  function answerQuiz(optIndex){
+    // scoring is deliberately arbitrary and unfair, like the rest of this site
+    quizScore += (optIndex + 1) * (7 + Math.floor(Math.random()*5));
+    quizIndex++;
+    renderQuizQuestion();
+  }
+  function renderQuizResult(){
+    const body = document.getElementById('quiz-body');
+    let pct = Math.min(100, Math.round(quizScore % 101));
+    if(pct < 12) pct += 40; // nobody gets a boringly low score on this site
+    const roast = quizRoasts.find(r => pct >= r.min && pct <= r.max) || quizRoasts[quizRoasts.length - 1];
+    body.innerHTML = `
+      <div class="quiz-result">
+        <h3>Your Results Are In</h3>
+        <div class="quiz-score">${roast.title}</div>
+        <p>${roast.line}</p>
+        <p style="opacity:0.6; font-size:0.78rem;">(This quiz has no scientific basis whatsoever. Or dating basis. Or basis.)</p>
+        <button class="quiz-opt" style="margin-top:0.6rem;" onclick="openCheckout('dating');closeQuiz();">Claim Gregory Anyway →</button>
+        <button class="quiz-opt" onclick="openQuiz();">Retake Quiz (rig it in your favor)</button>
+      </div>
+    `;
+  }
+
+  /* ================================================================
+     GREGORY CAM — perpetual buffering + fake live chat
+     ================================================================ */
+  const camBufferLines = [
+    "BUFFERING GREGORY'S EMOTIONAL AVAILABILITY...",
+    "RECONNECTING TO GREGORY'S BROODING SIGNAL...",
+    "LOADING SUNSET IN 4K...",
+    "AWAITING DOG APPROVAL TO GO LIVE...",
+    "GREGORY IS ADJUSTING THE LEATHER DRESS, PLEASE HOLD...",
+    "SIGNAL LOST. FOUND. LOST AGAIN. VERY ON BRAND..."
+  ];
+  const camCaptions = [
+    "Gregory is currently: staring at something off-camera.",
+    "Gregory is currently: considering texting back.",
+    "Gregory is currently: warming up for no reason.",
+    "Gregory is currently: out-brooding a scented candle.",
+    "Gregory is currently: 0% closer to explaining the cat costume.",
+    "Gregory is currently: winning an eye contact standoff with a lamp."
+  ];
+  const camChatNames = ["xX_sunsetfan_Xx", "dogloversunited", "kickboxfan22", "goth_but_make_it_cardio", "leatherdressenjoyer", "moody_but_hydrated"];
+  const camChatMsgs = [
+    "did he just blink in slow motion",
+    "the DOG is the real main character",
+    "why is this buffering, is HE buffering",
+    "I would also stare at that sunset tbh",
+    "someone check if he's texted anyone back yet",
+    "10/10 broodcast",
+    "is the leather dress a permanent feature",
+    "he hasn't moved in 6 minutes and I respect it",
+    "mods is this a dating site or a nature documentary",
+    "the eye contact game is unmatched"
+  ];
+  function pushCamChat(){
+    const inner = document.getElementById('cam-chat-inner');
+    if(!inner) return;
+    const name = camChatNames[Math.floor(Math.random()*camChatNames.length)];
+    const msg = camChatMsgs[Math.floor(Math.random()*camChatMsgs.length)];
+    const line = document.createElement('div');
+    line.className = 'cam-chat-msg';
+    line.innerHTML = `<b>${name}:</b> ${msg}`;
+    inner.appendChild(line);
+    while(inner.children.length > 6){ inner.removeChild(inner.firstChild); }
+    inner.scrollTop = inner.scrollHeight;
+  }
+  function rotateCamText(){
+    const bufferEl = document.getElementById('cam-buffer-text');
+    const capEl = document.getElementById('cam-caption');
+    const viewersEl = document.getElementById('cam-viewers');
+    if(bufferEl) bufferEl.textContent = camBufferLines[Math.floor(Math.random()*camBufferLines.length)];
+    if(capEl) capEl.textContent = camCaptions[Math.floor(Math.random()*camCaptions.length)];
+    if(viewersEl){
+      const n = 380 + Math.floor(Math.random()*90);
+      viewersEl.textContent = '👁 ' + n + ' watching';
+    }
+  }
+  setInterval(pushCamChat, 1800);
+  setInterval(rotateCamText, 4000);
+
+  // after some comedic "buffering," the actual footage kicks in and loops forever
+  function startGregoryCam(){
+    const buffer = document.getElementById('cam-buffer');
+    const footage = document.getElementById('cam-footage');
+    if(!footage) return;
+    const bufferDelay = 2600 + Math.random()*1400;
+    setTimeout(()=>{
+      buffer.classList.add('hide');
+      footage.classList.add('show');
+      footage.play().catch(()=>{ /* browser blocked autoplay, still shows first frame */ });
+    }, bufferDelay);
+  }
+  startGregoryCam();
+
+  /* ================================================================
+     REVIEW WALL
+     ================================================================ */
+  const gregoryReplies = [
+    "Gregory \"read\" this review and stared at the horizon in response.",
+    "Gregory's rep says he's \"flattered, probably\" and will \"absolutely\" reply within 3-5 emotional business days.",
+    "The dog has reviewed this review. The dog approves.",
+    "Gregory saw this, smiled once, denied it ever happened.",
+    "This review has been forwarded to Gregory's group chat, which is calling him out right now.",
+    "Gregory would like it known he is, in fact, texting back faster this week. Allegedly."
+  ];
+  function renderReviewCard(text, reply){
+    const list = document.getElementById('testimonials-list');
+    const card = document.createElement('div');
+    card.className = 't-card new-review';
+    card.innerHTML = `
+      <div class="stars">★★★★★</div>
+      <p class="quote">"${text}"</p>
+      <div class="who">— You, Probably Under Duress</div>
+      <div class="gregory-reply">${reply}</div>
+    `;
+    list.appendChild(card);
+    return card;
+  }
+  function loadSavedReviews(){
+    let saved = [];
+    try{
+      saved = JSON.parse(localStorage.getItem('ekitten_reviews') || '[]');
+    }catch(e){ saved = []; }
+    saved.forEach(r => renderReviewCard(r.text, r.reply));
+  }
+  function submitReview(){
+    const input = document.getElementById('review-input');
+    const raw = input.value.trim();
+    if(!raw) return;
+    const text = raw.replace(/</g,'&lt;');
+    const reply = gregoryReplies[Math.floor(Math.random()*gregoryReplies.length)];
+
+    const card = renderReviewCard(text, reply);
+    input.value = '';
+    card.scrollIntoView({behavior:'smooth', block:'center'});
+
+    let saved = [];
+    try{
+      saved = JSON.parse(localStorage.getItem('ekitten_reviews') || '[]');
+    }catch(e){ saved = []; }
+    saved.push({ text, reply });
+    localStorage.setItem('ekitten_reviews', JSON.stringify(saved));
+  }
+  loadSavedReviews();
+
+  /* ================================================================
+     SCAM-O-METER EASTER EGG (click the "VERIFIED" badge)
+     ================================================================ */
+  function openScamMeter(){
+    document.getElementById('scam-meter-overlay').classList.add('open');
+    const needle = document.getElementById('scam-needle');
+    const result = document.getElementById('scam-result');
+    needle.style.left = '6%';
+    result.textContent = 'Calculating...';
+    setTimeout(()=>{
+      needle.style.left = '94%';
+      result.textContent = 'RESULT: Yes. Extremely. On purpose. This whole site is a joke made to roast a friend named Gregory — no real payments happen anywhere on this page.';
+    }, 150);
+  }
+  function closeScamMeter(){
+    document.getElementById('scam-meter-overlay').classList.remove('open');
   }
 </script>
 
