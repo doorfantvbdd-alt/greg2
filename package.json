@@ -1,0 +1,8 @@
+{
+  "name": "ekitten-gated-site",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@vercel/functions": "^1.0.0"
+  }
+}

@@ -650,31 +650,11 @@
   }
 
   /* ================================================================
-     ACCESS GATE — site only unlocks via a scanned QR code, then
-     locks itself again after a 10-minute window
+     ACCESS SESSION TIMER — real gating now happens server-side
+     (Vercel Edge Middleware + a short-lived cookie minted by
+     /api/enter, which the card's QR code points to). This badge is
+     just a cosmetic readout of the same expiry the cookie carries.
      ================================================================ */
-  #access-gate{
-    position:fixed; inset:0; z-index:10050;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    text-align:center; padding:2rem;
-    background:
-      radial-gradient(circle at 20% 20%, #ff2fb033, transparent 45%),
-      radial-gradient(circle at 80% 30%, #9b30ff44, transparent 45%),
-      linear-gradient(160deg, var(--bg1), var(--bg2) 60%, #1a0733);
-  }
-  #access-gate.gate-hidden{ display:none; }
-  .access-lock-icon{ font-size:2.6rem; margin-bottom:0.6rem; filter:drop-shadow(0 0 16px rgba(255,47,176,0.6)); }
-  #access-gate-title{
-    font-family:'Baloo 2', cursive; font-weight:800; font-size:clamp(1.6rem,5vw,2.4rem);
-    background:linear-gradient(90deg, var(--pink-hot), var(--cyan));
-    -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:0.6rem;
-  }
-  #access-gate-sub{ max-width:420px; color:#f0e4ff; font-weight:600; margin-bottom:1.8rem; line-height:1.5; }
-  .access-gate-note{
-    margin-top:0.4rem; font-family:'JetBrains Mono', monospace; font-size:0.68rem;
-    color:rgba(255,255,255,0.5); max-width:380px; line-height:1.5;
-  }
-
   .access-timer-badge{
     display:none; align-items:center; gap:0.4rem; position:fixed; top:14px; left:14px; z-index:9000;
     background:rgba(0,0,0,0.5); border:2px solid var(--cyan); border-radius:20px;
@@ -896,14 +876,7 @@
 </head>
 <body>
 
-<div id="access-gate">
-  <div class="access-lock-icon">🔒</div>
-  <div id="access-gate-title">Private Access Only</div>
-  <div id="access-gate-sub">This page is invite-only. If you have the card, scan its QR code to get in.</div>
-  <div class="access-gate-note">A scan opens a 10-minute access window on this device. When it runs out, or if this tab is closed, you'll need to scan the card again.</div>
-</div>
-
-<div class="access-timer-badge" id="access-timer-badge">⏳ <span id="access-timer-value">10:00</span> left</div>
+<div class="access-timer-badge" id="access-timer-badge">⏳ <span id="access-timer-value">20:00</span> left</div>
 
 <div class="sparkles" id="sparkles"></div>
 
@@ -1379,77 +1352,34 @@
 
 <script>
   /* ================================================================
-     ACCESS GATE — must run first, before anything else initializes.
-     The page only unlocks when it's loaded with the secret token
-     below in the URL — that's exactly what the QR code on the
-     physical card encodes, and nothing else links to it. That grant
-     then lasts 10 minutes on this device before the gate reappears,
-     and closing the tab clears it immediately (sessionStorage).
-
-     👉 IMPORTANT — point your card's QR code at:
-        <your-site-url>?access=x7Qm2vLp9RzK4tYb
-     (swap <your-site-url> for wherever this file ends up hosted).
-     Change ACCESS_VALUE below to your own random string if you want
-     to pick a different one — just make sure the card's QR matches.
-
-     Honest limitation: this is a static HTML file with no server, so
-     there's no way to cryptographically verify a visit came from an
-     actual camera scan — it's really "you need this exact link,"
-     enforced by (a) nobody publishing it, (b) noindex so search
-     engines won't crawl it, and (c) the token being long enough
-     that nobody will guess or brute-force it. Someone who copies the
-     full URL (with the token) off a scanning phone could reuse it —
-     there's no way to stop that without a real backend.
+     ACCESS SESSION — real gating now happens server-side (Vercel
+     Edge Middleware checks a cookie before this HTML is ever served
+     at all; see /middleware.js and /api/enter.js in the project).
+     If this script is running, the middleware already confirmed a
+     valid session cookie exists. This block just reads that cookie's
+     expiry (set to the same moment the server will start rejecting
+     requests) to drive a cosmetic countdown badge, then reloads when
+     it hits zero so the now-expired cookie gets re-checked server-side.
      ================================================================ */
-  const ACCESS_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
-  const ACCESS_PARAM = 'access';
-  const ACCESS_VALUE = 'x7Qm2vLp9RzK4tYb'; // must match the URL encoded in the card's QR code
-  const ACCESS_STORAGE_KEY = 'ekitten_access_expires';
-  let accessCountdownTimer = null;
+  const ACCESS_COOKIE_NAME = 'ek_access';
 
-  function baseUrlNoQuery(){
-    return location.href.split('#')[0].split('?')[0];
-  }
-  function getUrlAccessParam(){
-    return new URLSearchParams(location.search).get(ACCESS_PARAM);
-  }
-  function currentAccessExpiry(){
-    const raw = sessionStorage.getItem(ACCESS_STORAGE_KEY);
-    const n = raw ? parseInt(raw, 10) : NaN;
-    return Number.isFinite(n) ? n : null;
-  }
-  function grantAccess(){
-    const expires = Date.now() + ACCESS_WINDOW_MS;
-    sessionStorage.setItem(ACCESS_STORAGE_KEY, String(expires));
-    return expires;
-  }
-  function clearAccess(){
-    sessionStorage.removeItem(ACCESS_STORAGE_KEY);
-  }
-
-  function showAccessGate(expiredMode){
-    clearInterval(accessCountdownTimer);
-    document.getElementById('access-timer-badge').classList.remove('show');
-    document.getElementById('access-gate-title').textContent = expiredMode ? '⏰ Access Window Closed' : '🔒 Private Access Only';
-    document.getElementById('access-gate-sub').textContent = expiredMode
-      ? "Your 10-minute window ran out. Scan the card's QR code again to get back in."
-      : "This page is invite-only. If you have the card, scan its QR code to get in.";
-    document.getElementById('access-gate').classList.remove('gate-hidden');
+  function readCookie(name){
+    const match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+    return match ? decodeURIComponent(match[1]) : null;
   }
 
   function startAccessCountdownUI(){
+    const raw = readCookie(ACCESS_COOKIE_NAME);
+    const expiry = raw ? parseInt(raw, 10) : null;
+    if(!Number.isFinite(expiry)) return; // no cookie to read — badge just stays hidden
     const badge = document.getElementById('access-timer-badge');
     const timeEl = document.getElementById('access-timer-value');
     badge.classList.add('show');
-    clearInterval(accessCountdownTimer);
-    accessCountdownTimer = setInterval(()=>{
-      const expires = currentAccessExpiry();
-      if(!expires){ clearInterval(accessCountdownTimer); return; }
-      const remaining = expires - Date.now();
+    const timer = setInterval(()=>{
+      const remaining = expiry - Date.now();
       if(remaining <= 0){
-        clearInterval(accessCountdownTimer);
-        clearAccess();
-        showAccessGate(true);
+        clearInterval(timer);
+        location.reload(); // cookie's Max-Age has lapsed too — middleware will now block this
         return;
       }
       const mm = Math.floor(remaining / 60000);
@@ -1458,31 +1388,7 @@
       badge.classList.toggle('low', remaining < 60000);
     }, 500);
   }
-
-  function enterSite(){
-    document.getElementById('access-gate').classList.add('gate-hidden');
-    startAccessCountdownUI();
-    runLoader();
-  }
-
-  (function initAccessGate(){
-    const paramVal = getUrlAccessParam();
-    let expiry = currentAccessExpiry();
-
-    if(paramVal === ACCESS_VALUE && !expiry){
-      expiry = grantAccess();
-    }
-    if(paramVal !== null){
-      history.replaceState({}, '', baseUrlNoQuery()); // don't leave the token sitting in the URL bar
-    }
-
-    if(expiry && expiry > Date.now()){
-      enterSite();
-    }else{
-      if(expiry) clearAccess();
-      showAccessGate(false);
-    }
-  })();
+  startAccessCountdownUI();
 
   /* ================================================================
      LOADING SCREEN — fake progress bar + rotating funny status lines
@@ -1524,6 +1430,7 @@
       fill.style.width = pct + '%';
     }, 180);
   }
+  runLoader();
 
   /* ================================================================
      HOME HUB — "Choose Your Ekitten" profile picker
