@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Rubik:wght@400;600;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<meta name="robots" content="noindex, nofollow, noarchive">
 <style>
   :root{
     --bg1:#1a0733;
@@ -609,6 +610,25 @@
     font-size:0.8rem; font-style:italic; opacity:0.85;
   }
 
+  /* ---- Star picker (for leaving a review) ---- */
+  .star-picker{ display:flex; gap:0.3rem; margin-bottom:0.7rem; }
+  .star-picker .star{
+    font-size:1.6rem; line-height:1; cursor:pointer; color:rgba(255,255,255,0.25);
+    transition:transform .12s, color .12s; user-select:none;
+  }
+  .star-picker .star:hover{ transform:scale(1.15); }
+  .star-picker .star.filled{ color:var(--yellow); text-shadow:0 0 10px rgba(255,242,61,0.6); }
+
+  /* ---- Review deletion (admin only — uses the site's existing admin login) ---- */
+  .t-card{ position:relative; }
+  .t-card .del-review-btn{
+    display:none; position:absolute; top:0.7rem; right:0.7rem; background:rgba(255,47,90,0.85);
+    color:#fff; border:none; width:26px; height:26px; border-radius:50%; cursor:pointer;
+    font-size:0.85rem; line-height:1; font-weight:700; align-items:center; justify-content:center;
+  }
+  body.admin-mode .t-card .del-review-btn{ display:flex; }
+  body.admin-mode .t-card{ border-color:rgba(255,47,90,0.6); }
+
   /* ---- Scam-o-meter easter egg ---- */
   #scam-meter-overlay{
     display:none; position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,0.9);
@@ -628,6 +648,42 @@
     .quiz-card{ padding:1.5rem; }
     .quiz-score{ font-size:2.4rem; }
   }
+
+  /* ================================================================
+     ACCESS GATE — site only unlocks via a scanned QR code, then
+     locks itself again after a 10-minute window
+     ================================================================ */
+  #access-gate{
+    position:fixed; inset:0; z-index:10050;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:2rem;
+    background:
+      radial-gradient(circle at 20% 20%, #ff2fb033, transparent 45%),
+      radial-gradient(circle at 80% 30%, #9b30ff44, transparent 45%),
+      linear-gradient(160deg, var(--bg1), var(--bg2) 60%, #1a0733);
+  }
+  #access-gate.gate-hidden{ display:none; }
+  .access-lock-icon{ font-size:2.6rem; margin-bottom:0.6rem; filter:drop-shadow(0 0 16px rgba(255,47,176,0.6)); }
+  #access-gate-title{
+    font-family:'Baloo 2', cursive; font-weight:800; font-size:clamp(1.6rem,5vw,2.4rem);
+    background:linear-gradient(90deg, var(--pink-hot), var(--cyan));
+    -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:0.6rem;
+  }
+  #access-gate-sub{ max-width:420px; color:#f0e4ff; font-weight:600; margin-bottom:1.8rem; line-height:1.5; }
+  .access-gate-note{
+    margin-top:0.4rem; font-family:'JetBrains Mono', monospace; font-size:0.68rem;
+    color:rgba(255,255,255,0.5); max-width:380px; line-height:1.5;
+  }
+
+  .access-timer-badge{
+    display:none; align-items:center; gap:0.4rem; position:fixed; top:14px; left:14px; z-index:9000;
+    background:rgba(0,0,0,0.5); border:2px solid var(--cyan); border-radius:20px;
+    padding:0.35rem 0.8rem; font-family:'JetBrains Mono', monospace; font-size:0.72rem; font-weight:700;
+    color:var(--cyan); backdrop-filter:blur(6px);
+  }
+  .access-timer-badge.show{ display:inline-flex; }
+  .access-timer-badge.low{ border-color:var(--pink); color:var(--pink-hot); animation:pulse-pill 1s infinite; }
+  @media (max-width:640px){ .access-timer-badge{ top:auto; bottom:14px; left:14px; } }
 
   /* ================================================================
      LOADING SCREEN
@@ -839,6 +895,15 @@
 </style>
 </head>
 <body>
+
+<div id="access-gate">
+  <div class="access-lock-icon">🔒</div>
+  <div id="access-gate-title">Private Access Only</div>
+  <div id="access-gate-sub">This page is invite-only. If you have the card, scan its QR code to get in.</div>
+  <div class="access-gate-note">A scan opens a 10-minute access window on this device. When it runs out, or if this tab is closed, you'll need to scan the card again.</div>
+</div>
+
+<div class="access-timer-badge" id="access-timer-badge">⏳ <span id="access-timer-value">10:00</span> left</div>
 
 <div class="sparkles" id="sparkles"></div>
 
@@ -1125,17 +1190,20 @@
       <h2>Word on the Street</h2>
     </div>
     <div class="testimonials" id="testimonials-list">
-      <div class="t-card">
+      <div class="t-card" data-seed="1">
+        <button class="del-review-btn" onclick="deleteReviewCard(this)" aria-label="Delete review">✕</button>
         <div class="stars">★★★★★</div>
         <p class="quote">"He watched the sunset longer than he watched me. Would still date again."</p>
         <div class="who">— Anonymous, Ex-Date</div>
       </div>
-      <div class="t-card">
+      <div class="t-card" data-seed="2">
+        <button class="del-review-btn" onclick="deleteReviewCard(this)" aria-label="Delete review">✕</button>
         <div class="stars">★★★★★</div>
         <p class="quote">"10 out of 10. Would let him hold my leash again."</p>
         <div class="who">— The Dog, Translated</div>
       </div>
-      <div class="t-card">
+      <div class="t-card" data-seed="3">
+        <button class="del-review-btn" onclick="deleteReviewCard(this)" aria-label="Delete review">✕</button>
         <div class="stars">★★★★☆</div>
         <p class="quote">"Left the ring undefeated. Left my group chat on read for three weeks."</p>
         <div class="who">— Former Training Partner</div>
@@ -1144,6 +1212,13 @@
 
     <div class="review-form">
       <h4>Leave Your Own Totally Real Review</h4>
+      <div class="star-picker" id="star-picker" role="radiogroup" aria-label="Star rating">
+        <span class="star" data-value="1" onclick="setReviewRating(1)">★</span>
+        <span class="star" data-value="2" onclick="setReviewRating(2)">★</span>
+        <span class="star" data-value="3" onclick="setReviewRating(3)">★</span>
+        <span class="star" data-value="4" onclick="setReviewRating(4)">★</span>
+        <span class="star" data-value="5" onclick="setReviewRating(5)">★</span>
+      </div>
       <textarea id="review-input" placeholder="e.g. He out-brooded my entire family reunion and I have never been prouder"></textarea>
       <br>
       <button onclick="submitReview()">✍️ Post Review (Not Verified By Anyone)</button>
@@ -1304,6 +1379,112 @@
 
 <script>
   /* ================================================================
+     ACCESS GATE — must run first, before anything else initializes.
+     The page only unlocks when it's loaded with the secret token
+     below in the URL — that's exactly what the QR code on the
+     physical card encodes, and nothing else links to it. That grant
+     then lasts 10 minutes on this device before the gate reappears,
+     and closing the tab clears it immediately (sessionStorage).
+
+     👉 IMPORTANT — point your card's QR code at:
+        <your-site-url>?access=x7Qm2vLp9RzK4tYb
+     (swap <your-site-url> for wherever this file ends up hosted).
+     Change ACCESS_VALUE below to your own random string if you want
+     to pick a different one — just make sure the card's QR matches.
+
+     Honest limitation: this is a static HTML file with no server, so
+     there's no way to cryptographically verify a visit came from an
+     actual camera scan — it's really "you need this exact link,"
+     enforced by (a) nobody publishing it, (b) noindex so search
+     engines won't crawl it, and (c) the token being long enough
+     that nobody will guess or brute-force it. Someone who copies the
+     full URL (with the token) off a scanning phone could reuse it —
+     there's no way to stop that without a real backend.
+     ================================================================ */
+  const ACCESS_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
+  const ACCESS_PARAM = 'access';
+  const ACCESS_VALUE = 'x7Qm2vLp9RzK4tYb'; // must match the URL encoded in the card's QR code
+  const ACCESS_STORAGE_KEY = 'ekitten_access_expires';
+  let accessCountdownTimer = null;
+
+  function baseUrlNoQuery(){
+    return location.href.split('#')[0].split('?')[0];
+  }
+  function getUrlAccessParam(){
+    return new URLSearchParams(location.search).get(ACCESS_PARAM);
+  }
+  function currentAccessExpiry(){
+    const raw = sessionStorage.getItem(ACCESS_STORAGE_KEY);
+    const n = raw ? parseInt(raw, 10) : NaN;
+    return Number.isFinite(n) ? n : null;
+  }
+  function grantAccess(){
+    const expires = Date.now() + ACCESS_WINDOW_MS;
+    sessionStorage.setItem(ACCESS_STORAGE_KEY, String(expires));
+    return expires;
+  }
+  function clearAccess(){
+    sessionStorage.removeItem(ACCESS_STORAGE_KEY);
+  }
+
+  function showAccessGate(expiredMode){
+    clearInterval(accessCountdownTimer);
+    document.getElementById('access-timer-badge').classList.remove('show');
+    document.getElementById('access-gate-title').textContent = expiredMode ? '⏰ Access Window Closed' : '🔒 Private Access Only';
+    document.getElementById('access-gate-sub').textContent = expiredMode
+      ? "Your 10-minute window ran out. Scan the card's QR code again to get back in."
+      : "This page is invite-only. If you have the card, scan its QR code to get in.";
+    document.getElementById('access-gate').classList.remove('gate-hidden');
+  }
+
+  function startAccessCountdownUI(){
+    const badge = document.getElementById('access-timer-badge');
+    const timeEl = document.getElementById('access-timer-value');
+    badge.classList.add('show');
+    clearInterval(accessCountdownTimer);
+    accessCountdownTimer = setInterval(()=>{
+      const expires = currentAccessExpiry();
+      if(!expires){ clearInterval(accessCountdownTimer); return; }
+      const remaining = expires - Date.now();
+      if(remaining <= 0){
+        clearInterval(accessCountdownTimer);
+        clearAccess();
+        showAccessGate(true);
+        return;
+      }
+      const mm = Math.floor(remaining / 60000);
+      const ss = Math.floor((remaining % 60000) / 1000);
+      timeEl.textContent = mm + ':' + String(ss).padStart(2,'0');
+      badge.classList.toggle('low', remaining < 60000);
+    }, 500);
+  }
+
+  function enterSite(){
+    document.getElementById('access-gate').classList.add('gate-hidden');
+    startAccessCountdownUI();
+    runLoader();
+  }
+
+  (function initAccessGate(){
+    const paramVal = getUrlAccessParam();
+    let expiry = currentAccessExpiry();
+
+    if(paramVal === ACCESS_VALUE && !expiry){
+      expiry = grantAccess();
+    }
+    if(paramVal !== null){
+      history.replaceState({}, '', baseUrlNoQuery()); // don't leave the token sitting in the URL bar
+    }
+
+    if(expiry && expiry > Date.now()){
+      enterSite();
+    }else{
+      if(expiry) clearAccess();
+      showAccessGate(false);
+    }
+  })();
+
+  /* ================================================================
      LOADING SCREEN — fake progress bar + rotating funny status lines
      ================================================================ */
   const loadingLines = [
@@ -1316,7 +1497,7 @@
     "Un-ironically loading irony...",
     "Bribing the countdown timer to keep going..."
   ];
-  (function runLoader(){
+  function runLoader(){
     const fill = document.getElementById('loading-bar-fill');
     const lineEl = document.getElementById('loading-line');
     let pct = 0, li = 0;
@@ -1342,7 +1523,7 @@
       }
       fill.style.width = pct + '%';
     }, 180);
-  })();
+  }
 
   /* ================================================================
      HOME HUB — "Choose Your Ekitten" profile picker
@@ -1386,6 +1567,7 @@
 
   function updateAdminUI(){
     document.getElementById('settings-btn').classList.toggle('show', isAdmin);
+    document.body.classList.toggle('admin-mode', isAdmin);
   }
 
   /* ================================================================
@@ -1927,24 +2109,49 @@
   startGregoryCam();
 
   /* ================================================================
-     REVIEW WALL — reviews are stored in a shared bin on ExtendsClass
-     JSON Storage so every visitor sees the same list, not just
-     localStorage per-browser. Their HTTP API explicitly supports CORS
-     from any origin, and reading/updating a bin needs no API key —
-     only *creating* one via their API needs a key (account required).
+     REVIEW WALL — reviews are stored in a free Firebase Realtime
+     Database so every visitor sees the same list, not just
+     localStorage per-browser. Nobody visiting the site ever sees a
+     sign-in — only the site owner needs a free Google account, once,
+     to create the database in Firebase's console.
 
-     ONE-TIME SETUP (about 30 seconds, no account):
-       1. Go to https://extendsclass.com/json-storage.html
-       2. Paste [] into the JSON box and click "Save"
-       3. Copy the bin id it shows you (also visible in the URI it gives you)
-       4. Paste that id into REVIEWS_BIN_ID below, then redeploy
+     ONE-TIME SETUP (about 3 minutes, owner only):
+       1. console.firebase.google.com → Add project
+       2. Build → Realtime Database → Create Database
+       3. Rules tab → paste:
+            { "rules": { "reviews": { ".read": true, ".write": true } } }
+          → Publish
+       4. Data tab → copy the URL at the top (ends in .firebaseio.com)
+       5. Paste that URL into FIREBASE_DB_URL below, then redeploy
 
-     Until REVIEWS_BIN_ID is filled in, reviews just fall back to this
+     Until FIREBASE_DB_URL is filled in, reviews just fall back to this
      browser only (same as before), so nothing breaks in the meantime.
      ================================================================ */
-  const REVIEWS_BIN_ID = '80e26118282a';
-  const REVIEWS_BIN_BASE = 'https://json.extendsclass.com/bin';
-  function reviewsBinUrl(id){ return REVIEWS_BIN_BASE + '/' + id; }
+  const FIREBASE_DB_URL = 'https://yaycx-3ef8b-default-rtdb.firebaseio.com';
+  function reviewsEndpoint(){ return FIREBASE_DB_URL.replace(/\/$/, '') + '/reviews.json'; }
+  function reviewEndpoint(key){ return FIREBASE_DB_URL.replace(/\/$/, '') + '/reviews/' + key + '.json'; }
+
+  async function deleteReviewCard(btnEl){
+    if(!isAdmin) return; // uses the site's existing admin login (⚙ Admin, code "e")
+    const card = btnEl.closest('.t-card');
+    if(!card) return;
+    if(!confirm('Delete this review for everyone?')) return;
+    const key = card.dataset.key;
+    card.remove();
+    if(key){
+      if(FIREBASE_DB_URL){
+        try{
+          await fetch(reviewEndpoint(key), { method:'DELETE' });
+        }catch(e){
+          console.error('Could not delete review from shared storage.', e);
+        }
+      }
+      deleteLocalReviewFallback(key);
+    }
+    // Seed reviews baked directly into the HTML have no storage key —
+    // removing them only hides them for this session/browser. Edit the
+    // testimonials-list markup in the HTML source to remove them for good.
+  }
 
   const gregoryReplies = [
     "Gregory \"read\" this review and stared at the horizon in response.",
@@ -1954,12 +2161,28 @@
     "This review has been forwarded to Gregory's group chat, which is calling him out right now.",
     "Gregory would like it known he is, in fact, texting back faster this week. Allegedly."
   ];
-  function renderReviewCard(text, reply){
+  let reviewRating = 5;
+  function setReviewRating(value){
+    reviewRating = value;
+    document.querySelectorAll('#star-picker .star').forEach(star => {
+      star.classList.toggle('filled', Number(star.dataset.value) <= value);
+    });
+  }
+  setReviewRating(5); // default to 5 stars filled in the picker
+
+  function starsHtml(rating){
+    const n = Math.max(1, Math.min(5, Math.round(Number(rating) || 5)));
+    return '★★★★★☆☆☆☆☆'.slice(5 - n, 10 - n);
+  }
+
+  function renderReviewCard(text, reply, rating, key){
     const list = document.getElementById('testimonials-list');
     const card = document.createElement('div');
     card.className = 't-card new-review';
+    if(key) card.dataset.key = key;
     card.innerHTML = `
-      <div class="stars">★★★★★</div>
+      <button class="del-review-btn" onclick="deleteReviewCard(this)" aria-label="Delete review">✕</button>
+      <div class="stars">${starsHtml(rating)}</div>
       <p class="quote">"${text}"</p>
       <div class="who">— You, Probably Under Duress</div>
       <div class="gregory-reply">${reply}</div>
@@ -1971,26 +2194,36 @@
   function loadLocalReviewsFallback(){
     let saved = [];
     try{ saved = JSON.parse(localStorage.getItem('ekitten_reviews') || '[]'); }catch(e){ saved = []; }
-    saved.forEach(r => renderReviewCard(r.text, r.reply));
+    saved.forEach(r => renderReviewCard(r.text, r.reply, r.rating, r.id));
   }
-  function saveLocalReviewFallback(text, reply){
+  function saveLocalReviewFallback(text, reply, rating){
     let saved = [];
     try{ saved = JSON.parse(localStorage.getItem('ekitten_reviews') || '[]'); }catch(e){ saved = []; }
-    saved.push({ text, reply });
+    const id = 'local-' + Date.now() + '-' + Math.floor(Math.random()*10000);
+    saved.push({ id, text, reply, rating });
+    localStorage.setItem('ekitten_reviews', JSON.stringify(saved));
+    return id;
+  }
+  function deleteLocalReviewFallback(id){
+    let saved = [];
+    try{ saved = JSON.parse(localStorage.getItem('ekitten_reviews') || '[]'); }catch(e){ saved = []; }
+    saved = saved.filter(r => r.id !== id);
     localStorage.setItem('ekitten_reviews', JSON.stringify(saved));
   }
 
   async function loadSavedReviews(){
-    if(!REVIEWS_BIN_ID){
-      console.warn('No REVIEWS_BIN_ID set yet — reviews are only saved in this browser. See the setup note near this code in the HTML source.');
+    if(!FIREBASE_DB_URL){
+      console.warn('No FIREBASE_DB_URL set yet — reviews are only saved in this browser. See the setup note near this code in the HTML source.');
       loadLocalReviewsFallback();
       return;
     }
     try{
-      const res = await fetch(reviewsBinUrl(REVIEWS_BIN_ID));
+      const res = await fetch(reviewsEndpoint());
       if(!res.ok) throw new Error('Reviews fetch failed: ' + res.status);
-      const saved = await res.json();
-      (Array.isArray(saved) ? saved : []).forEach(r => renderReviewCard(r.text, r.reply));
+      const data = await res.json(); // null, or { pushId: {text, reply, rating}, ... }
+      if(data){
+        Object.entries(data).forEach(([key, r]) => renderReviewCard(r.text, r.reply, r.rating, key));
+      }
     }catch(e){
       console.error('Could not load shared reviews — showing none for now.', e);
     }
@@ -2002,25 +2235,29 @@
     if(!raw) return;
     const text = raw.replace(/</g,'&lt;');
     const reply = gregoryReplies[Math.floor(Math.random()*gregoryReplies.length)];
+    const rating = reviewRating;
 
-    const card = renderReviewCard(text, reply);
+    const card = renderReviewCard(text, reply, rating);
     input.value = '';
+    setReviewRating(5);
     card.scrollIntoView({behavior:'smooth', block:'center'});
 
-    if(!REVIEWS_BIN_ID){ saveLocalReviewFallback(text, reply); return; }
+    if(!FIREBASE_DB_URL){ card.dataset.key = saveLocalReviewFallback(text, reply, rating); return; }
 
     try{
-      const getRes = await fetch(reviewsBinUrl(REVIEWS_BIN_ID));
-      const saved = getRes.ok ? await getRes.json() : [];
-      const list = Array.isArray(saved) ? saved : [];
-      list.push({ text, reply });
-      await fetch(reviewsBinUrl(REVIEWS_BIN_ID), {
-        method: 'PUT',
-        body: JSON.stringify(list)
+      // POST to a Firebase ".json" endpoint appends a new, uniquely-keyed
+      // record automatically — no read-modify-write race condition needed.
+      // The response gives back that key, which we keep on the card so
+      // admin deletion can target the exact record.
+      const res = await fetch(reviewsEndpoint(), {
+        method: 'POST',
+        body: JSON.stringify({ text, reply, rating })
       });
+      const data = await res.json(); // { name: "-NxYz..." }
+      if(data && data.name) card.dataset.key = data.name;
     }catch(e){
       console.error('Could not save review to shared storage — it will only show in this browser.', e);
-      saveLocalReviewFallback(text, reply);
+      card.dataset.key = saveLocalReviewFallback(text, reply, rating);
     }
   }
   loadSavedReviews();
